@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import {ToastContainer , toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { registerRoute } from '../utils/APIRoutes'
+
 function Register() {
+  const navigate = useNavigate()
  
   const [UserData, setUserData] = useState({
     username :"",
@@ -18,24 +20,36 @@ function Register() {
       autoClose:7000,
       draggable:true,
       pauseOnHover:true,
-      theme:"dark"
+      theme:"colored"
   }
 
 const handleSubmit = async (event)=>{
   event.preventDefault()
   if(handeValidation()){
-    const {password,confirmPassword,username,email} = UserData
+    console.log("in Validation", registerRoute);
+    const {password,username,email} = UserData
     const response = await axios.post(registerRoute,{
       username,email,password
     })
+    // console.log(response.user)
+if(response.data.status===false){
+  toast.error(response.data.msg ,toastOptions)
+}
+if(response.data.status===true){
+  localStorage.setItem("chat-app-user",JSON.stringify(response.config.data))
+  toast.success(response.data.msg ,toastOptions)
+  navigate("/")
+}
+
+
 
   }
-  alert('form submited')
+ 
 }
 const handeValidation = ()=>{
   const {password,confirmPassword,username,email} = UserData
 
-  if(password!==confirmPassword){
+  if(password !== confirmPassword){
     toast.error("Password and Confirm Password should be same",toastOptions)
     return false
   }
@@ -68,13 +82,13 @@ const handleChange = (e)=>{
 
        <div className="brand">
         <img src="" alt="" srcset="" />
-        <h1>SwiftTalkie</h1>
+        <h1>SwiftTalk</h1>
        </div>
 
        <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
-       <input type='email' placeholder='Email Id' name='username' onChange={(e)=>{handleChange(e)}}/>
+       <input type='email' placeholder='Email Id' name='email' onChange={(e)=>{handleChange(e)}}/>
        <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
-       <input type='password' placeholder='Confirm Password' name='confirmpassword' onChange={(e)=>{handleChange(e)}}/>
+       <input type='password' placeholder='Confirm Password' name='confirmPassword' onChange={(e)=>{handleChange(e)}}/>
 
        <button className='form-btn' type='submit'>Create Account</button>
        <span>
