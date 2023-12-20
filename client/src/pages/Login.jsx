@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import {ToastContainer , toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { registerRoute } from '../utils/APIRoutes'
+import { loginRoute } from '../utils/APIRoutes'
 
 export const Login = () => {
   const navigate = useNavigate()
  
   const [UserData, setUserData] = useState({
     username :"",
-    email:"",
-    password: "",
-    confirmPassword :"" 
+    password: "",  
   })
 
   const toastOptions = {
@@ -23,48 +21,44 @@ export const Login = () => {
       theme:"colored"
   }
 
+useEffect(()=>{
+  if(localStorage.getItem("chat-app-user")){
+    navigate("/")
+  }
+})
+
 const handleSubmit = async (event)=>{
   event.preventDefault()
   if(handeValidation()){
-    console.log("in Validation", registerRoute);
-    const {password,username,email} = UserData
-    const response = await axios.post(registerRoute,{
-      username,email,password
+    // console.log("in Validation", loginRoute);
+    const {password,username} = UserData
+    const response = await axios.post(loginRoute,{
+      username,password
     })
-    // console.log(response.user)
+     //console.log(response.data.status, response.data.msg)
 if(response.data.status===false){
   toast.error(response.data.msg ,toastOptions)
 }
-if(response.data.status===true){
-  localStorage.setItem("chat-app-user",JSON.stringify(response.config.data))
+if(response.data.status === true){
   toast.success(response.data.msg ,toastOptions)
+  localStorage.setItem("chat-app-user",JSON.stringify(response.config.data))
   navigate("/")
 }
-
-
-
   }
  
 }
 const handeValidation = ()=>{
-  const {password,confirmPassword,username,email} = UserData
+  const {username,password} = UserData
 
-  if(password !== confirmPassword){
-    toast.error("Password and Confirm Password should be same",toastOptions)
+  if(password === ""){
+    toast.error("Password is Required",toastOptions)
     return false
   }
-  else if(username.length<3){
-    toast.error("Username Should be greater than 3 character",toastOptions)
+  else if(username===""){
+    toast.error("Username is required",toastOptions)
     return false
   }
-  else if(password.length<6){
-    toast.error("Password length should be greater than 6",toastOptions)
-    return false
-  }
-  else if(email === ""){
-    toast.error("Please enter a valid email",toastOptions)
-    return false
-  }
+  
   return true
 }
 
@@ -86,9 +80,9 @@ const handleChange = (e)=>{
        </div>
 
        <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
-       <input type='email' placeholder='Email Id' name='email' onChange={(e)=>{handleChange(e)}}/>
+      
        <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
-       <input type='password' placeholder='Confirm Password' name='confirmPassword' onChange={(e)=>{handleChange(e)}}/>
+       
 
        <button className='form-btn' type='submit'>Log in</button>
        <span>

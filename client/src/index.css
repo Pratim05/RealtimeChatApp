@@ -4,3 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    background: url("./assets/background.jpg") no-repeat fixed center ;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    color: white;
+}

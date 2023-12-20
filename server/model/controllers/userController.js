@@ -27,3 +27,23 @@ try {
  next(err)
 }
 }
+
+
+module.exports.login = async (req,res,next) =>{
+try {
+ const  {username,password} = req.body
+  const user = await UsersListModel.findOne({username})
+  if(!user){
+    return res.json({msg:"Wrong Username", status:false})
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password)
+  if(!isPasswordValid){
+    return res.json({msg:"Incorrect Password", status:false})
+  }
+  delete user.password;
+  return res.json({msg:"Login Succesfully", status:true, user})
+} catch(err){
+    console.log(err);
+ next(err)
+}
+}
