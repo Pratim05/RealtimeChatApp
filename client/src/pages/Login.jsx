@@ -23,7 +23,7 @@ export const Login = () => {
 
 useEffect(()=>{
   if(localStorage.getItem("chat-app-user")){
-    navigate("/")
+    navigate("/chatroom")
   }
 })
 
@@ -41,8 +41,9 @@ if(response.data.status===false){
 }
 if(response.data.status === true){
   toast.success(response.data.msg ,toastOptions)
-  localStorage.setItem("chat-app-user",JSON.stringify(response.config.data))
-  navigate("/")
+ console.log(response.data.msg);
+  localStorage.setItem("chat-app-user",JSON.stringify(response.data.user))
+  navigate("/chatroom")
 }
   }
  

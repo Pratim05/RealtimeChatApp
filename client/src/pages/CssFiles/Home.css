@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,700&family=Rubik+Maps&family=Rubik+Scribble&display=swap');
+
+.homepage{
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+.header img{
+    margin-right: 10px;
+}
+.header h2{
+    letter-spacing: 2px;
+    font-family: 'Rubik Maps';
+
+}
+
+.body{
+    display: flex;
+    height: 400px;
+    gap: 1rem;
+ 
+}
+.body .left-body{
+    margin-left: 20px;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+   width: 50%;
+    height: 90%;
+}
+.body .left-body h1{
+    font-family: 'Rubik Scribble' ;
+
+}
+.body .left-body h6{
+    font-family: 'Rubik Mono';
+    font-size: 14px;
+    margin-top: 5px;
+}
+.body .L-R-buttons{
+   margin-top:50px ;
+   margin-left: 40px;
+}
+
+#login,#register{
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+
+}
+
+
+/* CSS */
+.L-R-buttons button{
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+
+.L-R-buttons button:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+#register{
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #36ce28 100%);
+}

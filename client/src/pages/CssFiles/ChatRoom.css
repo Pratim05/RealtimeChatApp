@@ -1,0 +1,24 @@
+#chatroom{
+    display: grid;
+   grid-template-rows: 30px 1fr;
+}
+navbar{
+ border: 2px solid red;
+
+}
+.chat-components{
+    margin: 0 auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border: 5px solid greenyellow;
+}
+.Contacts,.ChatMassage{
+    border: 1px solid red;
+    height: 500px;
+    width: 50%;
+    margin: 20px 10px 10px 0;
+}
+.ChatMassage{
+    width: 70%;
+}

@@ -20,8 +20,13 @@ try {
     username, email, password:hashPassword
   })
 
-  delete user.password;
-  return res.json({msg:"Account Created Succesfully", status:true, user})
+ // Create a user object without the password field
+ const userWithoutPassword = {
+  _id: user._id,
+  username: user.username,
+  email: user.email
+};
+  return res.json({msg:"Account Created Succesfully", status:true, user:userWithoutPassword})
 } catch(err){
     console.log(err);
  next(err)
@@ -40,10 +45,31 @@ try {
   if(!isPasswordValid){
     return res.json({msg:"Incorrect Password", status:false})
   }
-  delete user.password;
-  return res.json({msg:"Login Succesfully", status:true, user})
+ // Create a user object without the password field
+ const userWithoutPassword = {
+  _id: user._id,
+  username: user.username,
+  email: user.email
+};
+
+return res.json({ msg: "Login Successfully", status: true, user: userWithoutPassword });
 } catch(err){
     console.log(err);
  next(err)
 }
+}
+
+
+module.exports.allusers = async (req,res,next) =>{
+  try {
+    const users = await UsersListModel.find({_id: {$ne: req.params.id}}).select([
+      "email", "username", "avatarImage", "_id"
+    ])
+    
+    return res.json(users)
+    
+  } catch (err) {
+    console.log(err);
+    next(err)
+  }
 }

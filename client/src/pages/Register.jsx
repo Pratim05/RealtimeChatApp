@@ -20,7 +20,7 @@ function Register() {
       autoClose:7000,
       draggable:true,
       pauseOnHover:true,
-      theme:"colored"
+     
   }
 
 const handleSubmit = async (event)=>{
@@ -35,10 +35,12 @@ const handleSubmit = async (event)=>{
 if(response.data.status===false){
   toast.error(response.data.msg ,toastOptions)
 }
+
 if(response.data.status===true){
-  localStorage.setItem("chat-app-user",JSON.stringify(response.config.data))
-  toast.success(response.data.msg ,toastOptions)
-  navigate("/")
+  localStorage.setItem("chat-app-user",JSON.stringify(response.data.user))
+
+  toast.success(response.data.msg,toastOptions)
+  navigate("/chatroom")
 }
 
 
