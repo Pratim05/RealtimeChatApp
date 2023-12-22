@@ -4,6 +4,15 @@ import axios from "axios"
 import {ToastContainer , toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { registerRoute } from '../utils/APIRoutes'
+import app_logo from "../assets/app_logo.png"
+import { FaUser } from "react-icons/fa";
+import { IoLockClosedSharp,IoLockOpenSharp } from "react-icons/io5";
+import { AiOutlineMail } from "react-icons/ai";
+
+
+ import "./CssFiles/Register.css"
+
+
 
 function Register() {
   const navigate = useNavigate()
@@ -76,28 +85,82 @@ const handleChange = (e)=>{
   
 }
 
+const [visible, setVisible] = useState("password")
+const visiblePasword = ()=>{
+  if(visible === "password"){
+  setVisible("text")
+}
+  if(visible === "text"){
+  setVisible("password")
+}
+
+}
+
+
+
 
   return (
 
     <div className='Register'>
-       <form onSubmit={(event)=>{handleSubmit(event)}}>
+
 
        <div className="brand">
-        <img src="" alt="" srcset="" />
-        <h1>SwiftTalk</h1>
+        <img src={app_logo} alt="SwiftTalk" height={70}srcset="" />
+    
        </div>
+       <form onSubmit={(event)=>{handleSubmit(event)}} id="from1">
+     
+       <div className="input-boxes">
+       <div className="input-box"> 
+  <div className="icon"><FaUser /></div>
+  <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
+  </div>
 
-       <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
-       <input type='email' placeholder='Email Id' name='email' onChange={(e)=>{handleChange(e)}}/>
-       <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
-       <input type='password' placeholder='Confirm Password' name='confirmPassword' onChange={(e)=>{handleChange(e)}}/>
 
-       <button className='form-btn' type='submit'>Create Account</button>
-       <span>
-        <p>Already Have An Account ?</p><Link to="/login">Log In</Link>
+
+
+  <div className="input-box"> 
+  <div className="icon"><AiOutlineMail /></div>
+  <input type='email' placeholder='Email Id' name='email' onChange={(e)=>{handleChange(e)}}/>
+  </div>
+
+      
+
+
+  <div className="input-box"> 
+  <div className="icon" onClick={()=>{visiblePasword()}}>
+        {visible === "password" ? (
+          <IoLockClosedSharp />
+        ) : (
+          <IoLockOpenSharp />
+        )}
+      </div>  <input type={visible} placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
+  </div>
+
+  <div className="input-box"> 
+  <div className="icon" onClick={()=>{visiblePasword()}}>
+        {visible === "password" ? (
+          <IoLockClosedSharp />
+        ) : (
+          <IoLockOpenSharp />
+        )}
+      </div>  <input type={visible} placeholder='Confirm Password' name='confirmpassword' onChange={(e)=>{handleChange(e)}}/>
+  </div>
+
+</div>
+
+
+
+<div className="mid-line">
+<button className='form-btn' type='submit'>Create Account</button>
+</div>
+      
+      <span>
+        <p>Already Have An Account ?</p>
        </span>
 
        </form>
+       <Link  className='option-btn' to="/login">Log In</Link>
        <ToastContainer/>
     </div>
     

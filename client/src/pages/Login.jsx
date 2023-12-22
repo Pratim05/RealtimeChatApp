@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { loginRoute } from '../utils/APIRoutes'
 import app_logo from "../assets/app_logo.png"
 import { FaUser } from "react-icons/fa";
-import { IoLockClosedSharp } from "react-icons/io5";
+import { IoLockClosedSharp,IoLockOpenSharp } from "react-icons/io5";
 
 
 import "./CssFiles/Login.css"
@@ -75,6 +75,17 @@ const handleChange = (e)=>{
   
 }
 
+const [visible, setVisible] = useState("password")
+const visiblePasword = ()=>{
+  if(visible === "password"){
+  setVisible("text")
+}
+  if(visible === "text"){
+  setVisible("password")
+}
+
+}
+
 
   return (
 
@@ -93,9 +104,16 @@ const handleChange = (e)=>{
   </div>
 
   <div className="input-box"> 
-  <div className="icon"><IoLockClosedSharp /></div>
-  <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
+  <div className="icon" onClick={()=>{visiblePasword()}}>
+        {visible === "password" ? (
+          <IoLockClosedSharp />
+        ) : (
+          <IoLockOpenSharp />
+        )}
+      </div>  <input type={visible} placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
   </div>
+
+
 </div>
 <div className="mid-line">
 <button className='form-btn' type='submit'>Log in</button>

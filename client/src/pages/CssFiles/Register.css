@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@200&display=swap');
+
+.Register{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+#from1{
+    
+    margin-top: -33px;
+    height: 350px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.671);
+    padding: 10px;
+    padding-top: 50px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    color: rgb(7, 7, 77);
+    padding-bottom: 1px;
+}
+
+.input-boxes{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.brand{
+    z-index: 1000;
+}
+.input-box{
+    display: flex;
+    gap: 0.1rem;
+ 
+    padding: 4px;
+    
+}
+.input-box .icon{
+    padding: 5px;
+    background-color: rgb(5, 5, 41);
+    color: white;
+}
+.input-box input{
+    border: none;
+    padding: 5px;
+    width: 100%;
+    color: white;
+    background-color: rgba(9, 9, 78, 0.445);
+    font-family: 'Exo';
+}
+.input-box input::placeholder{
+    color: white;
+    font-family: 'Exo';
+}
+
+.mid-line{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+.forget-pass{
+    font-size: 10px;
+    font-family: 'Exo';
+}
+.option-btn{
+    width: 10rem;
+    text-align: center;
+    color: white;
+    background: rgba(255, 255, 255, 0.671);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    font-family: 'Exo';
+}
+.option-btn:hover{
+    width: 10rem;
+    text-align: center;
+    color: rgb(11, 3, 51);
+    background: rgba(255, 255, 255, 0.904);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+span{
+ text-align: center;
+}
+
+
+span p{
+    font-size: 12px;
+    font-family: 'Exo';
+}
+
+
+/* CSS */
+.form-btn{
+  align-items: center;
+  appearance: none;
+  background-color: #fcfcfdd5;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 35px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.form-btn:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.form-btn:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
