@@ -4,6 +4,12 @@ import axios from "axios"
 import {ToastContainer , toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { loginRoute } from '../utils/APIRoutes'
+import app_logo from "../assets/app_logo.png"
+import { FaUser } from "react-icons/fa";
+import { IoLockClosedSharp } from "react-icons/io5";
+
+
+import "./CssFiles/Login.css"
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -73,24 +79,36 @@ const handleChange = (e)=>{
   return (
 
     <div className='Login'>
-       <form onSubmit={(event)=>{handleSubmit(event)}}>
 
        <div className="brand">
-        <img src="" alt="" srcset=""/>
-        <h1>SwiftTalk</h1>
+        <img src={app_logo} alt="SwiftTalk" height={70} />
+        
        </div>
 
-       <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
-      
-       <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
-       
+       <form onSubmit={(event)=>{handleSubmit(event)}}>
+<div className="input-boxes">
+  <div className="input-box"> 
+  <div className="icon"><FaUser /></div>
+  <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
+  </div>
 
-       <button className='form-btn' type='submit'>Log in</button>
+  <div className="input-box"> 
+  <div className="icon"><IoLockClosedSharp /></div>
+  <input type='password' placeholder='Password' name='password' onChange={(e)=>{handleChange(e)}}/>
+  </div>
+</div>
+<div className="mid-line">
+<button className='form-btn' type='submit'>Log in</button>
+<p className="forget-pass">Forgot Password ?</p>
+</div>
+      
        <span>
-        <p>Don't Have An Account ?</p><Link to="/register">Create an Account</Link>
+        <p>Don't Have An Account ?</p>
+       
        </span>
 
        </form>
+       <Link className='option-btn' to="/register">Create an Account</Link>
        <ToastContainer/>
     </div>
     
