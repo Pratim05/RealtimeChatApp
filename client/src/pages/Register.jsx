@@ -144,7 +144,7 @@ const visiblePasword = ()=>{
         ) : (
           <IoLockOpenSharp />
         )}
-      </div>  <input type={visible} placeholder='Confirm Password' name='confirmpassword' onChange={(e)=>{handleChange(e)}}/>
+      </div>  <input type={visible} placeholder='Confirm Password' name='confirmPassword' onChange={(e)=>{handleChange(e)}}/>
   </div>
 
 </div>

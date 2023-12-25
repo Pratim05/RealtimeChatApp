@@ -1,24 +1,101 @@
-#chatroom{
+#chatroom {
     display: grid;
-   grid-template-rows: 30px 1fr;
+    grid-template-rows: 30px 1fr;
 }
-navbar{
- border: 2px solid red;
 
-}
-.chat-components{
+.chat-components {
     margin: 0 auto;
     width: 80%;
     display: grid;
     grid-template-columns: 1fr 2fr;
     border: 5px solid greenyellow;
 }
-.Contacts,.ChatMassage{
+
+.Contacts,
+.ChatMassage {
     border: 1px solid red;
     height: 500px;
     width: 50%;
-    margin: 20px 10px 10px 0;
+    margin: 10px 10px 10px 0;
 }
-.ChatMassage{
-    width: 70%;
+
+.ChatMassage ,.ChatContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* background: url(../../assets/chat_bg.jpg) no-repeat fixed center ; */
+    background-color: #74EBD5;
+    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+}
+
+#user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
+    color: blue;
+    padding: 2px;
+}
+
+#user-profile .icon {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin-left: auto;
+    background-color: #FFFFFF;
+    background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
+}
+
+.search-area {
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-area input {
+    padding: 2px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 0.904);
+    width: 85%;
+    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.904);
+}
+
+.search-area .icon {
+    background-color: blueviolet;
+    border-radius: 5px;
+}
+
+.allContactsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2px;
+    background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    
+}
+
+.allContactsList .contact {
+    background-color: rgba(6, 6, 90, 0.884);
+    border-radius: 2px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.allContactsList .selected {
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+
+
 }

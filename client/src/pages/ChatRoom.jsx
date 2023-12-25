@@ -2,15 +2,18 @@ import React, { useEffect, useState  } from 'react'
 import {useNavigate} from "react-router-dom"
 import Contacts from '../components/Contacts'
 import axios from "axios"
-import ChatMassage from '../components/ChatMassage'
 import "./CssFiles/ChatRoom.css"
 import { allUsersRoute } from '../utils/APIRoutes'
+import Welcome from '../components/Welcome'
+import ChatContainer from '../components/ChatContainer'
 
 function ChatRoom() {
  const navigate = useNavigate() 
 
  const [contacts, setContacts] = useState([])
  const [currentUser, setCurrentUser] = useState(undefined)
+ const [currentChat, setCurrentChat] = useState(undefined)
+ const [IsLoaded, setIsLoaded] = useState(false)
 
 
  useEffect(() => {
@@ -19,11 +22,12 @@ function ChatRoom() {
       navigate("/login");
     } else {
       setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")));
+      setIsLoaded(true)
     }
   };
 
   fetchData();
-}, [navigate]);
+}, []);
 
 useEffect(() => {
   const fetchData = async () => {
@@ -40,16 +44,22 @@ useEffect(() => {
 
   fetchData();
 }, [currentUser]);
+// console.log(currentUser);
 
-
+const handleChatChange = (chat)=>{
+  setCurrentChat(chat)
+}
 
 
   return (
     <div id='chatroom'>
       <div id="logo">Logo</div>
       <div className="chat-components">
-      <Contacts contacts ={contacts} currentUser = {currentUser}/>
-      <ChatMassage/>
+      <Contacts contacts ={contacts} currentUser = {currentUser} changeChat = {handleChatChange}/>
+      {
+        IsLoaded && currentChat === undefined ? ( <Welcome  currentUser = {currentUser}/>) : (<ChatContainer/>)
+      }
+     
       </div>
     </div>
   )
