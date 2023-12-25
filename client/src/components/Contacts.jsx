@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import default_avatar from "../assets/default_avatar.png"
 import { FcEditImage } from "react-icons/fc";
 import { TbUserSearch } from "react-icons/tb";
+import { BiPowerOff } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 function Contacts({contacts, currentUser ,changeChat}) {
 
+  const navigate = useNavigate()
   const [currentUserName, setCurrentUserName] = useState(undefined)
   const [currentUserImage, setCurrentUserImage] = useState(undefined)
   const [currentSelected, setCurrentSelected] = useState(undefined)
@@ -26,12 +29,22 @@ const changeCurrentChat = (index,contact) =>{
 
 }
 
+const handleLogout = ()=>{
+  localStorage.clear()
+  navigate("/")
+
+}
+
   return (
     <div className='Contacts'>
       <div id="user-profile">
         <img src={default_avatar} height={50} alt="" />
         <h3>{currentUserName}</h3>
-        <div className="icon"><FcEditImage /></div>
+        <div className="icon">
+          <FcEditImage id='edit'/>
+          <BiPowerOff id='logout' onClick={()=>{handleLogout()}} />
+          </div>
+       
       </div>
       <div className="search-area">
         <div className="icon"><TbUserSearch /></div>

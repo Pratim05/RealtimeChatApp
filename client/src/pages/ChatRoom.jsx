@@ -57,7 +57,7 @@ const handleChatChange = (chat)=>{
       <div className="chat-components">
       <Contacts contacts ={contacts} currentUser = {currentUser} changeChat = {handleChatChange}/>
       {
-        IsLoaded && currentChat === undefined ? ( <Welcome  currentUser = {currentUser}/>) : (<ChatContainer/>)
+        IsLoaded && currentChat === undefined ? ( <Welcome  currentUser = {currentUser}/>) : (<ChatContainer currentChat = {currentChat}/>)
       }
      
       </div>
