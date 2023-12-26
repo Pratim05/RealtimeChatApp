@@ -35,7 +35,7 @@ function Register() {
 const handleSubmit = async (event)=>{
   event.preventDefault()
   if(handeValidation()){
-    console.log("in Validation", registerRoute);
+    // console.log("in Validation", registerRoute);
     const {password,username,email} = UserData
     const response = await axios.post(registerRoute,{
       username,email,password

@@ -34,6 +34,8 @@ useEffect(()=>{
 })
 
 const handleSubmit = async (event)=>{
+  
+ try {
   event.preventDefault()
   if(handeValidation()){
     // console.log("in Validation", loginRoute);
@@ -52,6 +54,9 @@ if(response.data.status === true){
   navigate("/chatroom")
 }
   }
+ } catch (error) {
+  console.log(error)
+ }
  
 }
 const handeValidation = ()=>{

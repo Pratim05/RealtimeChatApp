@@ -6,6 +6,7 @@ import "./CssFiles/ChatRoom.css"
 import { allUsersRoute } from '../utils/APIRoutes'
 import Welcome from '../components/Welcome'
 import ChatContainer from '../components/ChatContainer'
+import app_logo from "../assets/app_logo.png"
 
 function ChatRoom() {
  const navigate = useNavigate() 
@@ -53,7 +54,7 @@ const handleChatChange = (chat)=>{
 
   return (
     <div id='chatroom'>
-      <div id="logo">Logo</div>
+      <div id="logo"><img src={app_logo} alt="Logo" height={70} /></div>
       <div className="chat-components">
       <Contacts contacts ={contacts} currentUser = {currentUser} changeChat = {handleChatChange}/>
       {
