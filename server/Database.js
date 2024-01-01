@@ -12,6 +12,12 @@ UsersListDb.once('open', () => {
   console.log('Connected to UsersList database!');
 });
 
+  const MessageDb = mongoose.createConnection(process.env.MESSAGE_MONGO_URL, options);
+MessageDb.on('error', console.error.bind(console, 'Message database connection error:'));
+MessageDb.once('open', () => {
+  console.log('Connected to Message database!');
+});
+
 
 const UserSchema = ({
     username:{
@@ -44,9 +50,31 @@ const UserSchema = ({
 })
 
 
+const messageSchema = new mongoose.Schema({
+  message:{
+    text:{
+      type:String, required:true
+    },
+  },
+  users :Array,
+  sender:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :"User",
+    required :true
+  },
+},
+  {
+    timestamps:true
+  }
+)
+
+
 const UsersListModel = UsersListDb.model('UserDetails', UserSchema);
+
+const MessageModel = MessageDb.model('messages', messageSchema);
 
 
 module.exports = {
-    UsersListModel
+    UsersListModel,
+    MessageModel
 }

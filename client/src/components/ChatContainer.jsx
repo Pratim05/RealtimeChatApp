@@ -1,7 +1,19 @@
 import React from 'react'
 import default_avatar from "../assets/default_avatar.png"
+import Chatinput from './Chatinput'
+import Messages from './Messages'
+import { sendMessageRoute } from '../utils/APIRoutes'
+import axios from 'axios'
 
-function ChatContainer({currentChat}) {
+function ChatContainer({currentChat,currentUser}) {
+  const handleSendMsg = async(msg)=>{
+    await axios.post(sendMessageRoute,{
+      from: currentUser._id,
+      to :currentChat._id,
+      message : msg,
+    })
+      
+  }
 
   return (
     <div>
@@ -14,9 +26,9 @@ function ChatContainer({currentChat}) {
             <div className="username">{currentChat.username}</div>
 
           </div>
-          <div className="chat-massages"></div>
+          <div className="chat-massages"><Messages/></div>
           <div className="chat-inputBox">
-            <input type="text" />
+            <Chatinput handleSendMsg = {handleSendMsg} />
           </div>
         </div>
       )}
