@@ -9,6 +9,7 @@
 .chat-components {
     margin: 0 auto;
     width: 70%;
+    height: 510px;
     display: grid;
     grid-template-columns: 1fr 2fr;
     /* border: 5px solid greenyellow; */
@@ -37,7 +38,7 @@
 }
 .ChatContainer{
     background: linear-gradient(to right, #0052d4, #4364f7, #6fb1fc);
-    height: 100%;
+    height: 510px;
     width: 100%;
     display: flex;
     flex-direction: column;

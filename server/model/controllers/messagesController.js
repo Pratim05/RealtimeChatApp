@@ -20,6 +20,7 @@ module.exports.addMessage = async (req,res,next) =>{
 }
 module.exports.getAllMessage = async (req,res,next) =>{
     try {
+       
 
         const {from , to} = req.body;
         const messages = await MessageModel.find({
@@ -30,14 +31,13 @@ module.exports.getAllMessage = async (req,res,next) =>{
 
         const projectMessages = messages.map((msg)=>{
             return{
-                fromSelf : msg.sender.toString()=== from,
+                fromSelf : msg.sender.toString() === from,
                 message : msg.message.text,
             }
         })
 
      res.json(projectMessages);
-
-        
+    
         
     } catch (ex) {
         next(ex)
