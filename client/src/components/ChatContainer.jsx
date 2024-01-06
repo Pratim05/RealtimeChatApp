@@ -6,11 +6,14 @@ import axios from 'axios'
 import '../pages/CssFiles/ChatMessages.css'
 import {v4 as uuid} from "uuid"
 
+
 function ChatContainer({currentChat,currentUser , socket}) {
 
   const [messages , setMessages] = useState([])
   const [arrivalMessage , setArrivalMessage] = useState(null)
  const scrollRef = useRef()
+
+ 
   
 useEffect(()=> {
   async function fetchMessages (){
@@ -49,18 +52,47 @@ useEffect(()=> {
     msgs.push({fromSelf:true , message:msg})
     setMessages(msgs)
   }
+
+ 
  
   useEffect(()=>{
+    console.log("useeffect" ,socket.current)
     if(socket.current){
-      socket.current.on("msg-recieved",(msg)=>{
+      console.log("if worked")
+      socket.current.on("msg-recieve",(msg)=>{
         setArrivalMessage({fromSelf:false, message:msg})
+        console.log("set",{msg})
       })
-    }
-
+      console.log("Event listener setup completed");
+   }
   },[])
+
+  // useEffect(() => {
+  //   console.log("useeffect", socket.current);
+  
+  //   // Move the event listener setup inside the socket.current block
+  //   if (socket.current) {
+  //     console.log("if worked");
+  //     const handleMsgRecieve = (msg) => {
+  //       setArrivalMessage({ fromSelf: false, message: msg });
+  //       console.log("set", { msg });
+  //     };
+  
+  //     socket.current.on("recieve", handleMsgRecieve);
+  //     console.log("Event listener setup completed")
+  
+  //     // Clean up the event listener when the component unmounts
+  //     // return () => {
+  //     //   socket.current.off("recieve", handleMsgRecieve);
+  //     // };
+  //   }
+  // }, []);
+  
+  
 
   useEffect(()=>{
     arrivalMessage && setMessages((prev)=>[...prev, arrivalMessage])
+    console.log(arrivalMessage,messages)
 
   },[arrivalMessage])
 
@@ -85,21 +117,15 @@ useEffect(()=> {
           </div>
           <div className="chat-massages">
 
-{
-  messages.map((message)=>{
-    return (
-      <div className={`message ${message.fromSelf ? "sended": "recieved"}`} ref={scrollRef} key ={uuid()}>
-          <div className="content">
-            <p>
-              {message.message}
-            </p>
-          </div>
-      </div>
-    )
+          {messages.map((message) => (
   
-  }
-  )
-}
+    <div className={`message ${message.fromSelf ? "sended" : "recieved"}`} key ={uuid()} ref = {scrollRef} >
+      <div className="content">
+        <p>{message.message}</p>
+      </div>
+    </div>
+  
+))}
 
           </div>
           <div className="chat-inputBox">

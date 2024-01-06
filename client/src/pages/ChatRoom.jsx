@@ -12,7 +12,7 @@ import {io} from "socket.io-client"
 
 function ChatRoom() {
  const navigate = useNavigate() 
-const socket = useRef()
+ const socket = useRef()
  const [contacts, setContacts] = useState([])
  const [currentUser, setCurrentUser] = useState(undefined)
  const [currentChat, setCurrentChat] = useState(undefined)
@@ -28,19 +28,18 @@ const socket = useRef()
       setIsLoaded(true)
     }
   };
-
   fetchData();
 }, []);
 
 
  useEffect(() => {
   if(currentUser){
+
     socket.current = io(host)
     socket.current.emit("add-user", currentUser._id)
+    
   }
- 
 }, [currentUser]);
-
 
 
 useEffect(() => {
@@ -51,14 +50,12 @@ useEffect(() => {
         setContacts(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        
       }
     }
   };
-
   fetchData();
 }, [currentUser]);
-// console.log(currentUser);
+
 
 const handleChatChange = (chat)=>{
   setCurrentChat(chat)
