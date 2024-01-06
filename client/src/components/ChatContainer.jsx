@@ -4,7 +4,7 @@ import Chatinput from './Chatinput'
 import { getAllMessagesRoute, sendMessageRoute } from '../utils/APIRoutes'
 import axios from 'axios'
 import '../pages/CssFiles/ChatMessages.css'
-import {v4 as uuid} from "uuid"
+import {v4 as uuidv4} from "uuid"
 
 
 function ChatContainer({currentChat,currentUser , socket}) {
@@ -53,16 +53,18 @@ useEffect(()=> {
     setMessages(msgs)
   }
 
- 
+  
  
   useEffect(()=>{
     console.log("useeffect" ,socket.current)
     if(socket.current){
+      console.log("Socket connection status:", socket.current.connected);
       console.log("if worked")
-      socket.current.on("msg-recieve",(msg)=>{
-        setArrivalMessage({fromSelf:false, message:msg})
-        console.log("set",{msg})
+      socket.current.on("msg-recieve",(data)=>{
+        console.log("set",data)
+        setArrivalMessage({fromSelf:false, message:data})
       })
+     
       console.log("Event listener setup completed");
    }
   },[])
@@ -119,7 +121,7 @@ useEffect(()=> {
 
           {messages.map((message) => (
   
-    <div className={`message ${message.fromSelf ? "sended" : "recieved"}`} key ={uuid()} ref = {scrollRef} >
+    <div className={`message ${message.fromSelf ? "sended" : "recieved"}`} key ={uuidv4()} ref = {scrollRef} >
       <div className="content">
         <p>{message.message}</p>
       </div>

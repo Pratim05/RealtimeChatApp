@@ -103,6 +103,19 @@ module.exports.login = async (req, res, next) => {
     next(err);
   }
 };
+// module.exports.forgetpass = async (req, res, next) => {
+//   try {
+//     const { email } = req.body;
+//     const user = await UsersListModel.findOne({ email });
+//     if (!user) {
+//       return res.json({ msg: "No Registered Account found", status: false });
+//     }
+//     const password = 
+//   } catch (err) {
+//     console.log(err);
+//     next(err);
+//   }
+// };
 
 module.exports.allusers = async (req, res, next) => {
   try {

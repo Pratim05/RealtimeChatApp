@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@500&family=Rajdhani&family=Salsa&display=swap');
+
+
 #chatroom {
     display: grid;
     grid-template-rows: 30px 1fr;
@@ -20,6 +23,8 @@
     height: 500px;
     width: 98%;
     margin: 10px 10px 10px 0;
+    font-family: 'Salsa', cursive;
+ 
 }
 .Contacts{
     background: linear-gradient(to right, #74ebd5, #acb6e5); 
@@ -49,8 +54,11 @@
     align-items: center;
     gap: 0.5rem;
     background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
-    color: blue;
+    color: rgb(21, 54, 199);
     padding: 2px;
+    font-family: 'Afacad', sans-serif;
+    font-size: 20px;
+
 }
 
 #user-profile .icon {
@@ -72,24 +80,29 @@
 }
 
 .search-area {
-    margin: 4px;
+    margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.904);
+    border-radius: 5px;
 }
 
 .search-area input {
-    padding: 2px;
+    padding: 4px;
     border: none;
-    border-radius: 0 5px 5px 0;
+    font-family: 'Rajdhani', sans-serif;
     margin-right: auto;
-    background-color: rgba(255, 255, 255, 0.904);
-    width: 85%;
-    box-shadow: inset 0 5px 15px rgba(255, 255, 255, 0.904);
+    width: 100%;
+    background: transparent;
+}
+.search-area input:focus{
+    border:none;
+    outline: none;
 }
 
 .search-area .icon {
-    background-color: blueviolet;
+    background-color: rgba(137, 43, 226, 0.788);
     border-radius: 5px;
 }
 
@@ -105,7 +118,7 @@
 
 .allContactsList .contact {
     background-color: rgba(6, 6, 90, 0.884);
-    border-radius: 2px;
+    border-radius: 3px;
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -113,6 +126,7 @@
     font-size: 10px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    font-size: 17px;
 }
 
 .allContactsList .selected {
@@ -133,6 +147,8 @@ gap: 0.8rem;
 border-bottom: 1px solid grey;
 background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
 color: blue;
+font-family: 'Salsa', cursive;
+font-size: 20px;
 }
 .ChatContainer .chat-massages{
     height: 75%;
@@ -151,6 +167,7 @@ color: blue;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
  background: rgba(255, 255, 255, 0.671);
  gap: 0.5rem;
+ box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
 }
 .Chatinput .input-container{
     height: 100%;
@@ -158,6 +175,7 @@ color: blue;
     display: flex;
     align-items: center;
     justify-content: center;
+
 
  
 }
@@ -167,11 +185,14 @@ color: blue;
  background: transparent;
  font-size: 14px;
  outline: none;
+ font-family: 'Rajdhani', sans-serif;
+ font-weight: 800;
 
 }
 .input-container input:focus{
  border: none;
  outline: none;
+ 
 }
 .button-conatiner{
     color: #ffff00c8;
@@ -191,7 +212,8 @@ color: blue;
 .emoji .EmojiPickerReact {
     position: absolute;
     top:0px;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.815);
+    z-index: 10
     
 }
 .emoji .EmojiPickerReact .epr-search-container, .epr-search{
@@ -199,3 +221,71 @@ color: blue;
 
 }
 
+#sendBtn {
+    display: inline-block;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #090909;
+    padding: 0.5em 1.5em;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  }
+  
+  #sendBtn{
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+  }
+  
+  #sendBtn:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  #sendBtn:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color:  #005b90;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+  
+  #sendBtn:hover {
+    color: #ffffff;
+    border: 1px solid  #005b90;
+  }
+  
+  #sendBtn:hover:before {
+    top: -35%;
+    background-color: #005b90;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+  
+  #sendBtn:hover:after {
+    top: -45%;
+    background-color: #005b90;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+  

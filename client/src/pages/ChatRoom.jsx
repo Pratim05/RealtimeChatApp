@@ -37,6 +37,7 @@ function ChatRoom() {
 
     socket.current = io(host)
     socket.current.emit("add-user", currentUser._id)
+    console.log("chatroom",socket.current)
     
   }
 }, [currentUser]);

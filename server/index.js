@@ -34,12 +34,13 @@ io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
     onlineUsers.set(userId, socket.id);
+
   });
   socket.on("send-msg", (data) => {
     //console.log(data)
-    const sendUserSocket = onlineUsers.get(data.to);
+    const sendUserSocket = onlineUsers.get(data.from);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("recieve", data.message);
+      socket.to(sendUserSocket).emit("msg-recieve", data.message);
       console.log("recieve event emitted on the server",data.message);
     }
   });
