@@ -10,6 +10,7 @@ import app_logo from "../assets/app_logo.png"
 
 import {io} from "socket.io-client"
 
+
 function ChatRoom() {
  const navigate = useNavigate() 
  const socket = useRef()
@@ -17,7 +18,6 @@ function ChatRoom() {
  const [currentUser, setCurrentUser] = useState(undefined)
  const [currentChat, setCurrentChat] = useState(undefined)
  const [IsLoaded, setIsLoaded] = useState(false)
-
 
  useEffect(() => {
   const fetchData = async () => {
@@ -37,7 +37,7 @@ function ChatRoom() {
 
     socket.current = io(host)
     socket.current.emit("add-user", currentUser._id)
-    console.log("chatroom",socket.current)
+    // console.log("chatroom",socket.current)
     
   }
 }, [currentUser]);
@@ -66,6 +66,7 @@ const handleChatChange = (chat)=>{
   return (
     <div id='chatroom'>
       <div id="logo"><img src={app_logo} alt="Logo" height={70} /></div>
+      
       <div className="chat-components">
       <Contacts contacts ={contacts} currentUser = {currentUser} changeChat = {handleChatChange}/>
       {

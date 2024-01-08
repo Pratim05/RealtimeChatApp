@@ -69,32 +69,13 @@ useEffect(()=> {
    }
   },[])
 
-  // useEffect(() => {
-  //   console.log("useeffect", socket.current);
   
-  //   // Move the event listener setup inside the socket.current block
-  //   if (socket.current) {
-  //     console.log("if worked");
-  //     const handleMsgRecieve = (msg) => {
-  //       setArrivalMessage({ fromSelf: false, message: msg });
-  //       console.log("set", { msg });
-  //     };
-  
-  //     socket.current.on("recieve", handleMsgRecieve);
-  //     console.log("Event listener setup completed")
-  
-  //     // Clean up the event listener when the component unmounts
-  //     // return () => {
-  //     //   socket.current.off("recieve", handleMsgRecieve);
-  //     // };
-  //   }
-  // }, []);
   
   
 
   useEffect(()=>{
     arrivalMessage && setMessages((prev)=>[...prev, arrivalMessage])
-    console.log(arrivalMessage,messages)
+    //console.log(arrivalMessage,messages)
 
   },[arrivalMessage])
 

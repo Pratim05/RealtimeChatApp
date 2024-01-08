@@ -44,7 +44,7 @@
     background-color: rgb(5, 5, 41);
     color: white;
 }
-.input-box input{
+.input-box input, .forget-pass input{
     border: none;
     padding: 10px;
     width: 100%;
@@ -140,4 +140,18 @@ span p{
 }
 
 
+.forget-head{
+    color:black;
+    font-family: "JetBrains Mono",monospace;
+    font-size: 17px;
+    margin-bottom: 20px;
+   
+}
+.forget-pass{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.7rem;
 
+}

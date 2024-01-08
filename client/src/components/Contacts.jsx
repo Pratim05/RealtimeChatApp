@@ -4,6 +4,11 @@ import { FcEditImage } from "react-icons/fc";
 import { TbUserSearch } from "react-icons/tb";
 import { BiPowerOff } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
+import ProfileEdit from "../components/ProfileEdit";
+
+import Model from "react-modal";
+Model.setAppElement("#root"); 
+
 
 
 
@@ -14,6 +19,7 @@ function Contacts({contacts, currentUser ,changeChat}) {
   const [currentUserName, setCurrentUserName] = useState(undefined)
   const [currentUserImage, setCurrentUserImage] = useState(undefined)
   const [currentSelected, setCurrentSelected] = useState(undefined)
+  const [OpenModal, setOpenModal] = useState(false)
 
 
 useEffect(()=>{
@@ -37,11 +43,24 @@ const handleLogout = ()=>{
 
   return (
     <div className='Contacts'>
+      <Model isOpen={OpenModal} onRequestClose = {()=>setOpenModal(false)} style={{
+          content:{
+            width:"450px",
+            height:"550px",
+            
+            margin: "0 auto"
+          }
+          
+        }} >
+
+<ProfileEdit/>
+
+  </Model>
       <div id="user-profile">
         <img src={default_avatar} height={50} alt="" />
         <h3>{currentUserName}</h3>
         <div className="icon">
-          <FcEditImage id='edit'/>
+          <FcEditImage id='edit'onClick={()=>setOpenModal(true)}/>
           <BiPowerOff id='logout' onClick={()=>{handleLogout()}} />
           </div>
        
