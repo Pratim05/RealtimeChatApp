@@ -22,18 +22,40 @@ function Contacts({contacts, currentUser ,changeChat}) {
   const [OpenModal, setOpenModal] = useState(false)
 
 
+function convertImageUrl(User) {
+let avatarImageUrl = default_avatar
+  if(User.avatarImage.data !==null){
+  const imageDataArray =User.avatarImage.data.data;
+// Convert the image data array to a Base64 encoded string
+const base64String = btoa(String.fromCharCode(...imageDataArray))
+// Construct the data URL for Profile Image
+ avatarImageUrl = `data:${User.avatarImage.contentType};base64,${base64String}`;
+ return avatarImageUrl
+  }else{
+return avatarImageUrl
+}
+}
+
+
 useEffect(()=>{
   if(currentUser){
     setCurrentUserName(currentUser.username)
-    setCurrentUserImage(currentUser.avatarImage)
+    
+  console.log(currentUser.avatarImage)
+
+
+setCurrentUserImage(convertImageUrl(currentUser))
+
   }
 },[currentUser])
 
 const changeCurrentChat = (index,contact) =>{
   setCurrentSelected(index)
   changeChat(contact)
-
 }
+
+
+
 
 const handleLogout = ()=>{
   localStorage.clear()
@@ -57,7 +79,7 @@ const handleLogout = ()=>{
 
   </Model>
       <div id="user-profile">
-        <img src={default_avatar} height={50} alt="" />
+        <img src={currentUserImage} height={50} alt="" />
         <h3>{currentUserName}</h3>
         <div className="icon">
           <FcEditImage id='edit'onClick={()=>setOpenModal(true)}/>
@@ -74,7 +96,7 @@ const handleLogout = ()=>{
         contacts.map((contact,index)=>{
           return(
             <div className={`contact ${index === currentSelected ? "selected" : ""}`} key={index} onClick={()=>{changeCurrentChat(index,contact)}}>
-              <img className='contact-profile-img' src={default_avatar} alt="profile"  height={30}/>
+              <img className='contact-profile-img' src={convertImageUrl(contact)} alt="profile"  height={30}/>
               <h3 className="contact-name">{contact.username}</h3>
      
             </div>

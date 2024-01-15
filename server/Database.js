@@ -33,6 +33,17 @@ const UserSchema = ({
         max:50,
         unique :true
     },
+    phoneNumber:{
+        type : Number,
+        required : true,
+    },
+    about:{
+        type : String,
+        max:300,
+    },
+    socialLinks:{
+        type : Array,
+    },
     password:{
         type : String,
         required : true,
@@ -44,8 +55,9 @@ const UserSchema = ({
       default: false
     },
     avatarImage :{
-      type:String,
-      default:""
+      filename: String ,
+      contentType:String,
+      data: mongoose.Schema.Types.Buffer
     },
 })
 

@@ -35,7 +35,6 @@
 .input-box{
     display: flex;
     gap: 0.1rem;
- 
     padding: 4px;
     
 }
@@ -145,7 +144,6 @@ span p{
     font-family: "JetBrains Mono",monospace;
     font-size: 17px;
     margin-bottom: 20px;
-   
 }
 .forget-pass{
     display: flex;
@@ -153,5 +151,4 @@ span p{
     align-items: center;
     justify-content: center;
     gap: 2.7rem;
-
 }

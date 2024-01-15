@@ -8,6 +8,8 @@ import app_logo from "../assets/app_logo.png"
 import { FaUser } from "react-icons/fa";
 import { IoLockClosedSharp,IoLockOpenSharp } from "react-icons/io5";
 import { AiOutlineMail } from "react-icons/ai";
+import { MdOutlinePhone } from "react-icons/md";
+import { FaUserCircle } from "react-icons/fa";
 
 
  import "./CssFiles/Register.css"
@@ -20,9 +22,17 @@ function Register() {
   const [UserData, setUserData] = useState({
     username :"",
     email:"",
+    phoneNumber:null,
+    about : "",
+    socialLinks :{
+      facebookUrl : "",
+      youtubeUrl : "",
+      InstagramUrl : "",
+    },
     password: "",
     confirmPassword :"" 
   })
+  const [avatarImage, setAvatarImage] = useState(null)
 
   const toastOptions = {
       position:'bottom-right',
@@ -36,10 +46,12 @@ const handleSubmit = async (event)=>{
   event.preventDefault()
   if(handeValidation()){
     // console.log("in Validation", registerRoute);
-    const {password,username,email} = UserData
+    const {password,username,email,phoneNumber,about,socialLinks} = UserData
     const response = await axios.post(registerRoute,{
-      username,email,password
-    })
+      password,username,email,phoneNumber,about,socialLinks, avatarImage
+    },{ headers: {
+      "Content-Type": "multipart/form-data",
+     }})
     // console.log(response.user)
 if(response.data.status===false){
   toast.error(response.data.msg ,toastOptions)
@@ -105,12 +117,18 @@ const visiblePasword = ()=>{
 
 
        <div className="brand">
-        <img src={app_logo} alt="SwiftTalk" height={70}srcset="" />
+        <img src={app_logo} alt="SwiftTalk" height={70} srcset="" />
     
        </div>
-       <form onSubmit={(event)=>{handleSubmit(event)}} id="from1">
+       <form enctype="multipart/form-data" onSubmit={(event)=>{handleSubmit(event)}} id="register-form">
      
        <div className="input-boxes">
+       <div className="input-box"> 
+       <label htmlFor="avatarImage">Upload Your Avatar</label>
+  <div className="icon"><FaUserCircle /></div>
+  <input type='file'name='avatarImage' accept="image/*" onChange={(e) => { setAvatarImage(e.target.files[0])}}/>
+  </div>
+  
        <div className="input-box"> 
   <div className="icon"><FaUser /></div>
   <input type='text' placeholder='Username' name='username' onChange={(e)=>{handleChange(e)}}/>
@@ -122,6 +140,10 @@ const visiblePasword = ()=>{
   <div className="input-box"> 
   <div className="icon"><AiOutlineMail /></div>
   <input type='email' placeholder='Email Id' name='email' onChange={(e)=>{handleChange(e)}}/>
+  </div>
+  <div className="input-box"> 
+  <div className="icon"><MdOutlinePhone/></div>
+  <input type='number' placeholder='Phone Number' name='phoneNumber' onChange={(e)=>{handleChange(e)}}/>
   </div>
 
       

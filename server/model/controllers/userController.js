@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
+
 //Settings for sent mail on User register
 const nodemailer = require("nodemailer");
 
@@ -18,7 +19,9 @@ const transporter = nodemailer.createTransport({
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { password,username,email,phoneNumber,about,socialLinks } = req.body;
+
+    // console.log(req.body,req.files)
     const usernameCheck = await UsersListModel.findOne({ username });
     if (usernameCheck) {
       return res.json({ msg: "Username already exist", status: false });
@@ -29,11 +32,28 @@ module.exports.register = async (req, res, next) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
+    let imageData = {
+      filename: null,
+      contentType: null,
+      data: null,
+    };
+    if(req.files!==null){
+         imageData = {
+          filename: req.files.avatarImage.name,
+          contentType: req.files.avatarImage.mimetype,
+          data: req.files.avatarImage.data,
+        };
+      }
 
     const user = await UsersListModel.create({
       username,
       email,
+      phoneNumber,
+      about,
+      socialLinks,
       password: hashPassword,
+      avatarImage:imageData,
+
     });
 
     // Create a user object without the password field
@@ -41,6 +61,10 @@ module.exports.register = async (req, res, next) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      phoneNumber,
+      about,
+      socialLinks,
+      avatarImage:user.avatarImage,
     };
 
     //Sending an email
@@ -94,6 +118,10 @@ module.exports.login = async (req, res, next) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      phoneNumber:user.phoneNumber,
+      about:user.about,
+      socialLinks:user.socialLinks,
+      avatarImage:user.avatarImage
     };
 
     return res.json({
@@ -207,8 +235,7 @@ module.exports.allusers = async (req, res, next) => {
   try {
     const users = await UsersListModel.find({
       _id: { $ne: req.params.id },
-    }).select(["email", "username", "avatarImage", "_id"]);
-
+    }).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);
     return res.json(users);
   } catch (err) {
     console.log(err);

@@ -13,7 +13,19 @@ function ChatContainer({currentChat,currentUser , socket}) {
   const [arrivalMessage , setArrivalMessage] = useState(null)
  const scrollRef = useRef()
 
- 
+ function convertImageUrl(User) {
+  let avatarImageUrl = default_avatar
+    if(User.avatarImage.data !==null){
+    const imageDataArray =User.avatarImage.data.data;
+  // Convert the image data array to a Base64 encoded string
+  const base64String = btoa(String.fromCharCode(...imageDataArray))
+  // Construct the data URL for Profile Image
+   avatarImageUrl = `data:${User.avatarImage.contentType};base64,${base64String}`;
+   return avatarImageUrl
+    }else{
+  return avatarImageUrl
+  }
+  }
   
 useEffect(()=> {
   async function fetchMessages (){
@@ -93,7 +105,7 @@ useEffect(()=> {
         <div className="ChatContainer">
           <div className="chat-header">
             <div className="avatar">
-              <img src={default_avatar} alt="" height={50} />
+              <img src={convertImageUrl(currentChat)} alt="" height={50} />
             </div>
             <div className="username">{currentChat.username}</div>
 

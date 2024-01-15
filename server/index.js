@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 
 const userRoutes = require("./routes/userRoutes.js");
 const messageRoutes = require("./routes/messagesRoute.js");
@@ -13,6 +14,7 @@ require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);

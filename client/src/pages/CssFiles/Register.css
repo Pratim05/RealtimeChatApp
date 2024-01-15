@@ -8,11 +8,11 @@
     justify-content: center;
 
 }
-#from1{
+#register-form{
     
     margin-top: -33px;
-    height: 350px;
-    width: 250px;
+    height: 500px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -139,3 +139,4 @@ span p{
   box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   transform: translateY(-2px);
 }
+
