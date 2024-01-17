@@ -4,47 +4,56 @@
 #chatroom {
     display: grid;
     grid-template-rows: 30px 1fr;
+    
 }
 #logo{
     padding: 10px 0 0 10px;
 }
 
 .chat-components {
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     margin: 0 auto;
     width: 70%;
     height: 510px;
     display: grid;
+    gap: 1.2rem;
     grid-template-columns: 1fr 2fr;
+    border-radius: 25px;
     /* border: 5px solid greenyellow; */
 }
 
 .Contacts
  {
-    height: 500px;
-    width: 98%;
-    margin: 10px 10px 10px 0;
+    height: 450px;
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 10px;
     font-family: 'Salsa', cursive;
  
 }
 .Contacts{
-    background: linear-gradient(to right, #74ebd5, #acb6e5); 
+    background-color: rgba(255, 255, 255, 0.774);
+    border-radius: 20px;
+    box-shadow:  0 2px 14px rgba(0, 0, 0, 0.5);
 }
 
 .ChatMassage {
-    width: 100%;
+    width: 70%;
+    margin-left:15px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* background: url(../../assets/chat_bg.jpg) no-repeat fixed center ; */
-    background: linear-gradient(to right, #0052d4, #4364f7, #6fb1fc);
+  
 
 }
 .ChatContainer{
-    background: linear-gradient(to right, #0052d4, #4364f7, #6fb1fc);
-    height: 510px;
+    /* background: linear-gradient(to right, #0052d4, #4364f7, #6fb1fc); */
+    height: 500px;
     width: 100%;
+    padding-top: 11px;
     display: flex;
     flex-direction: column;
 }
@@ -53,11 +62,11 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
-    color: rgb(21, 54, 199);
+    color: rgb(2, 2, 66);
     padding: 4px;
     font-family: 'Afacad', sans-serif;
-    font-size: 20px;
+    font-size: 15px;
+    border-radius: 20px 20px 0 0 ;
 
 }
 
@@ -117,13 +126,14 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 2px;
-    background-color: #8BC6EC;
-    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    /* background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%); */
     
 }
 
 .allContactsList .contact {
-    background-color: rgba(79, 79, 199, 0.993);
+    /* background-color: rgba(79, 79, 199, 0.993); */
+    color: #090909;
     border-radius: 3px;
     height:55px;
     display: flex;
@@ -144,23 +154,22 @@
 }
 
 .allContactsList .selected {
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    border-left: 1px solid blue;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+
 
 }
 
 .ChatContainer .chat-header{
-width: 100%;
+width: 80%;
 height: 12%;
-color: blue;
 display: flex;
 padding: 10px;
 align-items: center;
 justify-content: flex-start;
 gap: 0.8rem;
-border-bottom: 1px solid grey;
-background-image: linear-gradient(180deg, #FFFFFF 0%, #6284FF 97%, #FF0000 100%);
-color: blue;
+color: black;
 font-family: 'Salsa', cursive;
 font-size: 20px;
 }
@@ -169,6 +178,7 @@ font-size: 20px;
     height: 50px;
     width: 50px;
     box-shadow:  0 2px 10px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
 }
 .ChatContainer .chat-massages{
     height: 75%;
@@ -196,8 +206,6 @@ font-size: 20px;
     align-items: center;
     justify-content: center;
 
-
- 
 }
 .input-container input{
  width: 90%;
@@ -212,8 +220,8 @@ font-size: 20px;
 .input-container input:focus{
  border: none;
  outline: none;
- 
 }
+
 .button-conatiner{
     color: #ffff00c8;
     display: flex;

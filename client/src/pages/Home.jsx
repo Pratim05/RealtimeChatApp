@@ -41,7 +41,7 @@ function Home() {
         <div className="left-body">
            
           <h1>Your words, their destination - in an instant. Real-time chatting redefined</h1>
-          <h6>Breaking the barriers of time: Chat now, not later</h6>
+          <h6>Breaking the barriers of time: Chat now, not later!</h6>
           <div className="L-R-buttons">
             <button id="login"onClick={()=>{navigate("/login")}}>login</button>
             <button id="register" onClick={()=>{navigate("/register")}}>Create an account now</button>
