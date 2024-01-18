@@ -245,30 +245,55 @@ module.exports.allusers = async (req, res, next) => {
 
 module.exports.editprofile = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
-    const usernameCheck = await UsersListModel.findOne({ username });
+    const { userId, username, phoneNumber, about, socialLinks } = req.body;
+    
+    const usernameCheck = await UsersListModel.findOne({
+      _id: { $ne: userId }, // Exclude the current user with the specified userId
+      username: username,
+    });
+  
+    
+   
+   
     if (usernameCheck) {
       return res.json({ msg: "Username already exist", status: false });
     }
-
-    const hashPassword = await bcrypt.hash(password, 10);
-
-    //  const user  = await UsersListModel.findByIdAndUpdate({_id:userId},{
-    //   username : username,
-    //   password : hashPassword
-    //  })
-
-    // Create a user object without the password field
-    const userWithoutPassword = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
+    let imageData = {
+      filename: null,
+      contentType: null,
+      data: null,
     };
+    
+    if (req.files !== null) {
+      imageData = {
+        filename: req.files.avatarImage.name,
+        contentType: req.files.avatarImage.mimetype,
+        data: req.files.avatarImage.data,
+      };
+    }
+    
+    const updateFields = {
+      username: username,
+      phoneNumber: phoneNumber,
+      about: about,
+      socialLinks: socialLinks,
+    };
+    console.log(updateFields)
+    
+    // Only include avatarImage in the updateFields if req.files is not null
+    if (req.files !== null) {
+      updateFields.avatarImage = imageData;
+    }
+    
+    const user = await UsersListModel.findByIdAndUpdate({ _id: userId }, updateFields).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);
+    // console.log(user)
+    
     return res.json({
-      msg: "Account Created Succesfully",
+      msg: "Account Updated Successfully",
       status: true,
-      user: userWithoutPassword,
+      user: user,
     });
+    
   } catch (err) {
     console.log(err);
     next(err);

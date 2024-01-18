@@ -42,7 +42,9 @@ const UserSchema = ({
         max:300,
     },
     socialLinks:{
-        type : Array,
+      facebookUrl : String,
+      youtubeUrl : String,
+      InstagramUrl :String
     },
     password:{
         type : String,

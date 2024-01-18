@@ -25,6 +25,7 @@
     max-width:220px;
     min-height:40px;
     margin:10px;
+    padding-left: 13px;
     position:relative;
     align-items:center;
     justify-content:center;
@@ -70,7 +71,7 @@
 
 .chat-massages::-webkit-scrollbar {
     width: 4px;
-    opacity: 0.6;
+    opacity: 0.1;
   }
   
   .chat-massages::-webkit-scrollbar-track {

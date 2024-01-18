@@ -63,7 +63,7 @@ function Contacts({ contacts, currentUser, changeChat }) {
           },
         }}
       >
-        <ProfileEdit />
+        <ProfileEdit currentUser={currentUser} convertImageUrl = {convertImageUrl}/>
       </Model>
       <div id="user-profile">
         <img src={currentUserImage} height={50} alt="" />
