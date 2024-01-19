@@ -18,6 +18,7 @@ function ChatRoom() {
  const [currentUser, setCurrentUser] = useState(undefined)
  const [currentChat, setCurrentChat] = useState(undefined)
  const [IsLoaded, setIsLoaded] = useState(false)
+ const[update,setUpdate] = useState(false)
 
  useEffect(() => {
   const fetchData = async () => {
@@ -29,7 +30,9 @@ function ChatRoom() {
     }
   };
   fetchData();
-}, []);
+  console.log(update)
+  setUpdate(false)
+}, [],update,setUpdate);
 
 
  useEffect(() => {
@@ -68,7 +71,7 @@ const handleChatChange = (chat)=>{
       <div id="logo"><img src={app_logo} alt="Logo" height={70} /></div>
       
       <div className="chat-components">
-      <Contacts contacts ={contacts} currentUser = {currentUser} changeChat = {handleChatChange}/>
+      <Contacts contacts ={contacts} currentUser = {currentUser} setUpdate={setUpdate} changeChat = {handleChatChange}/>
       {
         IsLoaded && currentChat === undefined ? ( <Welcome  currentUser = {currentUser}/>) : (<ChatContainer currentChat = {currentChat} currentUser ={currentUser} socket = {socket}/>)
       }

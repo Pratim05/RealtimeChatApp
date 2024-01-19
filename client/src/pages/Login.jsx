@@ -193,7 +193,7 @@ export const Login = () => {
       <Link className="option-btn" to="/register">
         Create an Account
       </Link>
-      <ToastContainer />
+      
     </div>
   );
 };

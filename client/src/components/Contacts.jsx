@@ -9,7 +9,7 @@ import Model from 'react-modal';
 
 Model.setAppElement('#root');
 
-function Contacts({ contacts, currentUser, changeChat }) {
+function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
   const navigate = useNavigate();
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -63,10 +63,10 @@ function Contacts({ contacts, currentUser, changeChat }) {
           },
         }}
       >
-        <ProfileEdit currentUser={currentUser} convertImageUrl = {convertImageUrl}/>
+        <ProfileEdit currentUser={currentUser} convertImageUrl = {convertImageUrl} setOpenModal = {setOpenModal} setUpdate = {setUpdate}/>
       </Model>
       <div id="user-profile">
-        <img src={currentUserImage} height={50} alt="" />
+        <img src={currentUserImage} height={50} alt="" onclick={()=>setUpdate(true)}/>
         <h3>{currentUserName}</h3>
         <div className="icon">
           <FcEditImage id="edit" onClick={() => setOpenModal(true)} />

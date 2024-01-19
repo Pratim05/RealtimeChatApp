@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { password,username,email,phoneNumber,about,socialLinks } = req.body;
+    const { password,username,email,phoneNumber,about } = req.body;
 
     // console.log(req.body,req.files)
     const usernameCheck = await UsersListModel.findOne({ username });
@@ -32,6 +32,11 @@ module.exports.register = async (req, res, next) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
+    let socialLinks = {
+      facebookUrl : "",
+      youtubeUrl : "",
+      InstagramUrl : ""
+    };
     let imageData = {
       filename: null,
       contentType: null,
@@ -50,10 +55,9 @@ module.exports.register = async (req, res, next) => {
       email,
       phoneNumber,
       about,
-      socialLinks,
+      socialLinks:socialLinks,
       password: hashPassword,
       avatarImage:imageData,
-
     });
 
     // Create a user object without the password field
@@ -245,16 +249,13 @@ module.exports.allusers = async (req, res, next) => {
 
 module.exports.editprofile = async (req, res, next) => {
   try {
-    const { userId, username, phoneNumber, about, socialLinks } = req.body;
-    
+    const { userId, username, phoneNumber, about, facebookUrl , youtubeUrl,instagramUrl } = req.body;
+    console.log(facebookUrl,youtubeUrl,instagramUrl)
     const usernameCheck = await UsersListModel.findOne({
       _id: { $ne: userId }, // Exclude the current user with the specified userId
       username: username,
     });
   
-    
-   
-   
     if (usernameCheck) {
       return res.json({ msg: "Username already exist", status: false });
     }
@@ -271,27 +272,34 @@ module.exports.editprofile = async (req, res, next) => {
         data: req.files.avatarImage.data,
       };
     }
-    
+    let socialLinks = {
+      facebookUrl : facebookUrl,
+      youtubeUrl : youtubeUrl,
+      instagramUrl : instagramUrl
+    };
     const updateFields = {
       username: username,
       phoneNumber: phoneNumber,
       about: about,
-      socialLinks: socialLinks,
+     socialLinks: socialLinks,
     };
     console.log(updateFields)
+   
     
     // Only include avatarImage in the updateFields if req.files is not null
     if (req.files !== null) {
       updateFields.avatarImage = imageData;
     }
     
-    const user = await UsersListModel.findByIdAndUpdate({ _id: userId }, updateFields).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);
-    // console.log(user)
+    await UsersListModel.findByIdAndUpdate({ _id: userId }, updateFields)
+    
+    const updatedUser = await UsersListModel.findOne({ username }).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);;
+    
     
     return res.json({
       msg: "Account Updated Successfully",
       status: true,
-      user: user,
+      user: updatedUser,
     });
     
   } catch (err) {

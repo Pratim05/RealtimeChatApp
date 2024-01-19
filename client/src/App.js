@@ -1,5 +1,6 @@
 import React from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { ToastContainer } from "react-toastify";
 
 import { Login } from "./pages/Login";
 
@@ -20,6 +21,7 @@ function App() {
     <Route path="/resetpass/:id/:token" element = {<ResetPass/>}/>
     <Route path="/" element = {<Home/>}/>
     </Routes>
+    <ToastContainer />
     </BrowserRouter>
   );
 }

@@ -22,13 +22,8 @@ function Register() {
   const [UserData, setUserData] = useState({
     username :"",
     email:"",
-    phoneNumber:null,
+    phoneNumber:"",
     about : "",
-    socialLinks :{
-      facebookUrl : "",
-      youtubeUrl : "",
-      InstagramUrl : "",
-    },
     password: "",
     confirmPassword :"" 
   })
@@ -46,9 +41,9 @@ const handleSubmit = async (event)=>{
   event.preventDefault()
   if(handeValidation()){
     // console.log("in Validation", registerRoute);
-    const {password,username,email,phoneNumber,about,socialLinks} = UserData
+    const {password,username,email,phoneNumber,about} = UserData
     const response = await axios.post(registerRoute,{
-      password,username,email,phoneNumber,about,socialLinks, avatarImage
+      password,username,email,phoneNumber,about, avatarImage
     },{ headers: {
       "Content-Type": "multipart/form-data",
      }})
@@ -183,7 +178,7 @@ const visiblePasword = ()=>{
 
        </form>
        <Link  className='option-btn' to="/login">Log In</Link>
-       <ToastContainer/>
+      
     </div>
     
   )

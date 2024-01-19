@@ -34,8 +34,7 @@ const UserSchema = ({
         unique :true
     },
     phoneNumber:{
-        type : Number,
-        required : true,
+        type : String,
     },
     about:{
         type : String,
@@ -44,7 +43,7 @@ const UserSchema = ({
     socialLinks:{
       facebookUrl : String,
       youtubeUrl : String,
-      InstagramUrl :String
+      instagramUrl :String
     },
     password:{
         type : String,
