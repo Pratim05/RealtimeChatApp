@@ -133,7 +133,7 @@ function ResetPass() {
     <Link className="option-btn" to="/">
      Go Back
     </Link>
-    <ToastContainer />
+    
   </div>
   )
 }

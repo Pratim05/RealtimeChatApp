@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import default_avatar from '../assets/default_avatar.png';
 import { FcEditImage } from 'react-icons/fc';
-import { TbUserSearch } from 'react-icons/tb';
+import { BiSearch } from "react-icons/bi";
 import { BiPowerOff } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import ProfileEdit from '../components/ProfileEdit';
@@ -74,15 +74,15 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
         </div>
       </div>
       <div className="search-area">
-        <div className="icon">
-          <TbUserSearch />
-        </div>
         <input
           type="text"
           placeholder="Search Contacts"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <div className="icon">
+          <BiSearch />
+        </div>
       </div>
       <div className="allContactsList">
         {filteredContacts.map((contact, index) => (

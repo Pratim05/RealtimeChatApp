@@ -12,6 +12,12 @@ UsersListDb.once('open', () => {
   console.log('Connected to UsersList database!');
 });
 
+  const UserOtpStoreDb = mongoose.createConnection(process.env.OTPSTORE_MONGO_URL, options);
+UsersListDb.on('error', console.error.bind(console, ' UserOtpStore database connection error:'));
+UsersListDb.once('open', () => {
+  console.log('Connected to  UserOtpStore database!');
+});
+
   const MessageDb = mongoose.createConnection(process.env.MESSAGE_MONGO_URL, options);
 MessageDb.on('error', console.error.bind(console, 'Message database connection error:'));
 MessageDb.once('open', () => {
@@ -81,13 +87,21 @@ const messageSchema = new mongoose.Schema({
   }
 )
 
+const userOtpVerificationSchema = new mongoose.Schema({
+  email:String,
+  otp:String,
+  createdAt:Date,
+  expiresAt:Date,
+})
+
 
 const UsersListModel = UsersListDb.model('UserDetails', UserSchema);
 
 const MessageModel = MessageDb.model('messages', messageSchema);
-
+const userOtpVerification = UserOtpStoreDb.model("userOtpVerification", userOtpVerificationSchema)
 
 module.exports = {
     UsersListModel,
-    MessageModel
+    MessageModel,
+    userOtpVerification
 }

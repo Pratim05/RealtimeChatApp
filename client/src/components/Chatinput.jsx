@@ -44,8 +44,6 @@ const sendChat = (event)=>{
       </form>
 
     </div>
-
-
   )
 }
 

@@ -2,6 +2,9 @@ export const host = "http://localhost:5000"
 
 export const registerRoute = `${host}/api/auth/register`
 
+export const sendotpRoute = `${host}/api/auth/sendotp`
+export const verifyotpRoute = `${host}/api/auth/verifyotp`
+
 export const loginRoute = `${host}/api/auth/login`
 
 export const allUsersRoute = `${host}/api/auth/allusers`

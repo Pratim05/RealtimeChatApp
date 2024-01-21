@@ -115,7 +115,7 @@ export const Login = () => {
         <img src={app_logo} alt="SwiftTalk" height={70} />
       </div>
       <div className="resetModel">
-      <Model isOpen={OpenModal} onRequestClose = {()=>setOpenModal(false)}  style={{
+       <Model isOpen={OpenModal} onRequestClose = {()=>setOpenModal(false)}  style={{
           content:{
             width:"200px",
             height:"200px",

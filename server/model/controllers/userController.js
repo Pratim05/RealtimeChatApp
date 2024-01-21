@@ -1,4 +1,4 @@
-const { UsersListModel } = require("../../Database");
+const { UsersListModel, userOtpVerification } = require("../../Database");
 
 const bcrypt = require("bcrypt");
 
@@ -160,7 +160,7 @@ module.exports.forgetpass = async (req, res, next) => {
       html: `
           <h3> Welcome ${user.username},</h3>
           <p>We wanted to express our sincere gratitude for choosing Swift Talk.</p>
-          <h4>Clink the Button to Reset Password , Link will Expires in 6 minutes</h4>
+          <h4>Click the Button to Reset Password , Link will Expires in 6 minutes</h4>
           <button><a href =${resetLink}>Reset Password</a></button>
 
           <p>If you not made this request , Please Ignore<p/
@@ -233,6 +233,84 @@ module.exports.resetpass = async (req, res, next) => {
   }
 };
 
+module.exports.sendEmailOtp = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await UsersListModel.findOne({ email });
+    if (user) {
+      return res.json({ msg: "Email is Already registered", status: false });
+    }
+     const otp = `${Math.floor(1000 + Math.random()*9000)}`
+    //Sending an email
+    var mailOptions = {
+      from: "SWIFT TALK <mernwebdevelopment@gmail.com>",
+      to: email,
+      subject: "Email ID Verifiation",
+      html: `
+          <h3> Welcome </h3>
+          <p>We wanted to express our sincere gratitude for choosing Swift Talk.</p>
+          <h4>Here is The OTP for Email Verification , OTP will Expires in 10 minutes</h4>
+          <h3><b>${otp}</b></h3>
+
+          <p>If you not made this request , Please Ignore<p/
+         
+          <p>Best regards,<br>
+          <b>The Swift Talk Team</b></p>
+        `,
+    };
+    const hashedOtp = await bcrypt.hash(otp, 10); //hashing the otp
+    const newOtpVerification = new userOtpVerification({
+      email:email,
+      otp:hashedOtp,
+      createdAt:Date.now(),
+       expiresAt:Date.now() + 600000,
+    })
+    //Save the otp for 10 minitues
+    await newOtpVerification.save()
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent : " + info.response);
+      }
+    });
+
+    return res.json({ msg: "Check Your Email For Verification", status: 'pending' , data :{email}});
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+module.exports.verifyEmailOtp = async (req, res, next) =>{
+  try {
+    const { email, otp } = req.body;
+    const otpInfo = await userOtpVerification.findOne({ email });
+    if(!otpInfo){
+      res.json({msg:"Something wrong", status: false})
+    }
+    if(otpInfo){
+       const {expiresAt} = otpInfo
+       const hashedOtp = otpInfo.otp
+       if(expiresAt<Date.now()){
+        //Otp expires
+        await userOtpVerification.deleteMany({email})
+        res.json({msg:"OTP has Expired. Please Request again", status: "Expired"})
+       }else{
+       const validOtp = bcrypt.compare(otp , hashedOtp)
+       if(!validOtp){
+        res.json({msg:"Wrong OTP , Check your Inbox", status: "wrong"})
+       }else{
+        await userOtpVerification.deleteMany({email})
+        res.json({msg:"Email is Verified", status: true})
+       }
+       }
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 module.exports.allusers = async (req, res, next) => {
