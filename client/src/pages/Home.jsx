@@ -10,8 +10,7 @@ function Home() {
 
 
   return (
-    <div className='homepage'>
-      
+    <div className='homepage'>      
       <div className="header">
         <div>
           <div id="nav-text">

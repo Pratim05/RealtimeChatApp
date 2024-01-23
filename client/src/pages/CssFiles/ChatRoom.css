@@ -169,22 +169,31 @@
     box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.5);
     width: 103%;
     border-radius: 0px;
-
-
-
 }
 
 .ChatContainer .chat-header{
-width: 80%;
+width: 98%;
 height: 12%;
 display: flex;
+flex-direction: row;
 padding: 10px;
 align-items: center;
-justify-content: flex-start;
+justify-content: space-between;
 gap: 0.8rem;
 color: black;
 font-family: 'Salsa', cursive;
 font-size: 20px;
+}
+.chat-header .avatar_name{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+.contact-info{
+    font-size: 21px;
+    text-align: right;
+    cursor: pointer;
 }
 .ChatContainer .chat-header img{
     border-radius: 50%;
@@ -204,10 +213,10 @@ font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 75%;
+    height: 70%;
     width: 90%;
     border-radius: 4px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+ box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
  background: rgba(255, 255, 255, 0.671);
  gap: 0.5rem;
  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
@@ -240,7 +249,7 @@ font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 50%;
 }
 
 .emoji{
@@ -360,6 +369,7 @@ font-size: 20px;
     .Contacts{
         margin-left: 0;
         margin-right: 2px;
+      
     }
     #user-profile img{
         height: 40px;
@@ -373,5 +383,31 @@ font-size: 20px;
         padding: 0;
         font-size: 10px;
     }
+    .allContactsList .contact{
+       font-size: 12px;   
+    }
+    .allContactsList .contact img {
+        height: 40px;
+        width: 40px;
+    }
+    .ChatContainer .chat-header{
+        gap: 0.6rem;
+        font-size: 15px;
+        }
+        .ChatContainer .chat-header img{
+            height: 45px;
+            width: 45px;
+            margin-left: 0px;
+        }
+        .Chatinput{
+            width: 95%;
+        }
+
+ .emoji svg{
+    font-size: 1.3rem;
+  }
+  .emoji{
+    margin-left: 4px;
+  }
 
 }

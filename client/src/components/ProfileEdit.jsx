@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../pages/CssFiles/ProfileEdit.css";
 import { FaUser } from "react-icons/fa";
+import { MdMarkEmailRead } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";
 import { BsYoutube } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
@@ -158,7 +159,7 @@ useEffect(()=>{
           <div className="inputBox">
             <input type="text" placeholder={currentUser.email} disabled />
             <div className="icon">
-              <FaUser />
+              <MdMarkEmailRead/>
             </div>
           </div>
         </div>
