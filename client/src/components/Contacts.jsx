@@ -9,13 +9,14 @@ import Model from 'react-modal';
 
 Model.setAppElement('#root');
 
-function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
+function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, setnotification }) {
   const navigate = useNavigate();
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  
 
   function convertImageUrl(User) {
     let avatarImageUrl = default_avatar;
@@ -29,6 +30,7 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
     }
   }
 
+
   useEffect(() => {
     if (currentUser) {
       setCurrentUserName(currentUser.username);
@@ -36,9 +38,25 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
     }
   }, [currentUser]);
 
+  const CheckNotification =(contact)=>{
+    if(notification){
+     console.log(notification);
+     console.log(contact._id)
+     if((notification.sender===contact._id)){
+       return true
+     }else{
+       return false
+     }
+    }
+    return false
+ }
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
+    if(CheckNotification(contact)){
+      setnotification(null)
+    }
   };
 
   const handleLogout = () => {
@@ -49,6 +67,8 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
   const filteredContacts = contacts.filter((contact) =>
     contact.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  
 
   return (
     <div className="Contacts">
@@ -100,6 +120,7 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat }) {
               height={30}
             />
             <h3 className="contact-name">{contact.username}</h3>
+            <p>{CheckNotification(contact) && notification.message}</p>
           </div>
         ))}
       </div>

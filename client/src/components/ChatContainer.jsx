@@ -7,10 +7,12 @@ import "../pages/CssFiles/ChatMessages.css";
 import { FcInfo } from "react-icons/fc";
 import { v4 as uuidv4 } from "uuid";
 
-function ChatContainer({ currentChat, currentUser, socket }) {
+function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
+  const [MsgSender, setMsgSender] = useState('')
+  
 
   function convertImageUrl(User) {
     let avatarImageUrl = default_avatar;
@@ -31,6 +33,18 @@ function ChatContainer({ currentChat, currentUser, socket }) {
   }
 
   useEffect(() => {
+    console.log("useeffect", socket.current);
+    if (socket.current) {
+      console.log("Socket connection status:", socket.current.connected);
+      socket.current.on("msg-recieve", (data) => {    
+        setArrivalMessage({ fromSelf: false, message: data.message });
+         setMsgSender(data.from)
+      });
+      console.log("Event listener setup completed");
+    }
+  },[currentChat]);
+
+  useEffect(() => {
     async function fetchMessages() {
       if (currentChat) {
         try {
@@ -47,6 +61,9 @@ function ChatContainer({ currentChat, currentUser, socket }) {
     fetchMessages();
   }, [currentChat]);
 
+
+
+
   const handleSendMsg = async (msg) => {
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
@@ -54,8 +71,8 @@ function ChatContainer({ currentChat, currentUser, socket }) {
       message: msg,
     });
     socket.current.emit("send-msg", {
-      from: currentChat._id,
-      to: currentUser._id,
+      from: currentUser._id,
+      to: currentChat._id,
       message: msg,
     });
     const msgs = [...messages];
@@ -63,23 +80,22 @@ function ChatContainer({ currentChat, currentUser, socket }) {
     setMessages(msgs);
   };
 
-  useEffect(() => {
-    console.log("useeffect", socket.current);
-    if (socket.current) {
-      console.log("Socket connection status:", socket.current.connected);
-      console.log("if worked");
-      socket.current.on("msg-recieve", (data) => {
-        console.log("set", data);
-        setArrivalMessage({ fromSelf: false, message: data });
-      });
 
-      console.log("Event listener setup completed");
+  
+ 
+ 
+
+
+
+
+  useEffect(() => {
+    if(currentChat && arrivalMessage){
+    if(MsgSender===currentChat._id){
+       arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    }else if(MsgSender!==currentChat._id){
+      setnotification({sender : MsgSender , message: arrivalMessage.message})
     }
-  }, []);
-
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-    //console.log(arrivalMessage,messages)
+  }
   }, [arrivalMessage]);
 
   useEffect(() => {
