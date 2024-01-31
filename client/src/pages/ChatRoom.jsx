@@ -21,6 +21,7 @@ function ChatRoom() {
  const[update,setUpdate] = useState(false)
  const [notification, setnotification] = useState(null)
 
+
  useEffect(() => {
   const fetchData = async () => {
     if (!localStorage.getItem("chat-app-user")) {

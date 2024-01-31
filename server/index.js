@@ -43,7 +43,8 @@ io.on("connection", (socket) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data);
-      console.log("recieve event emitted on the server",data);
+      socket.to(sendUserSocket).emit("get-notification", data);
+      // console.log("recieve event emitted on the server",data);
     }
   });
 });

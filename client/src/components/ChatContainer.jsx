@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import default_avatar from "../assets/default_avatar.png";
 import Chatinput from "./Chatinput";
-import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
+import { getAllMessagesRoute, sendMessageRoute ,addNotificationRoute} from "../utils/APIRoutes";
 import axios from "axios";
 import "../pages/CssFiles/ChatMessages.css";
 import { FcInfo } from "react-icons/fc";
@@ -33,9 +33,9 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
   }
 
   useEffect(() => {
-    console.log("useeffect", socket.current);
+    // console.log("useeffect", socket.current);
     if (socket.current) {
-      console.log("Socket connection status:", socket.current.connected);
+      // console.log("Socket connection status:", socket.current.connected);
       socket.current.on("msg-recieve", (data) => {    
         setArrivalMessage({ fromSelf: false, message: data.message });
          setMsgSender(data.from)
@@ -80,6 +80,17 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     setMessages(msgs);
   };
 
+  // const Savenotification = async(MsgSender,arrivalMessage,currentUser)=>{
+  //   try {
+  //     const response = await axios.post(addNotificationRoute, {
+  //       sender : MsgSender , message: arrivalMessage.message, reciever :currentUser._id,
+  //     });
+  //     console.log(response)
+      
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   
  
@@ -93,7 +104,8 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     if(MsgSender===currentChat._id){
        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
     }else if(MsgSender!==currentChat._id){
-      setnotification({sender : MsgSender , message: arrivalMessage.message})
+      setnotification({sender : MsgSender , message: arrivalMessage.message, reciever :currentUser._id,})
+      // Savenotification(MsgSender,arrivalMessage,currentUser)
     }
   }
   }, [arrivalMessage]);

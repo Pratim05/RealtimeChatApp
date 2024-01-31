@@ -2,8 +2,8 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 
 const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
   };
 
   const UsersListDb = mongoose.createConnection(process.env.USERLIST_MONGO_URL, options);
@@ -18,7 +18,7 @@ UsersListDb.once('open', () => {
   console.log('Connected to  UserOtpStore database!');
 });
 
-  const MessageDb = mongoose.createConnection(process.env.MESSAGE_MONGO_URL, options);
+const MessageDb = mongoose.createConnection(process.env.MESSAGE_MONGO_URL, options);
 MessageDb.on('error', console.error.bind(console, 'Message database connection error:'));
 MessageDb.once('open', () => {
   console.log('Connected to Message database!');
@@ -76,6 +76,7 @@ const messageSchema = new mongoose.Schema({
     },
   },
   users :Array,
+  isRead : Boolean,
   sender:{
     type:mongoose.Schema.Types.ObjectId,
     ref :"User",
@@ -94,14 +95,29 @@ const userOtpVerificationSchema = new mongoose.Schema({
   expiresAt:Date,
 })
 
+const  chatNotificationSchema = new mongoose.Schema({
+  sender:String,
+  message:{
+    text:{
+      type:String, required:true
+    },
+  },
+  reciever : String,
+  Isread:Boolean,
+  recievedAt: Date,
+})
+
 
 const UsersListModel = UsersListDb.model('UserDetails', UserSchema);
 
 const MessageModel = MessageDb.model('messages', messageSchema);
+const notificationModel = MessageDb.model('notifications', chatNotificationSchema);
+
 const userOtpVerification = UserOtpStoreDb.model("userOtpVerification", userOtpVerificationSchema)
 
 module.exports = {
     UsersListModel,
     MessageModel,
-    userOtpVerification
+    userOtpVerification,
+    notificationModel
 }

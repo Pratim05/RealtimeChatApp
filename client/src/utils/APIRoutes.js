@@ -17,4 +17,8 @@ export const editprofileRoute = `${host}/api/auth/editprofile`
 
 export const sendMessageRoute = `${host}/api/messages/addmsg`
 
+export const IsreadUpdateRoute = `${host}/api/messages/setread`
+
+export const getAllNotificationsRoute = `${host}/api/messages/getntf`
+
 export const getAllMessagesRoute = `${host}/api/messages/getmsg`

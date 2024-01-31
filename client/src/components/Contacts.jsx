@@ -6,17 +6,21 @@ import { BiPowerOff } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import ProfileEdit from '../components/ProfileEdit';
 import Model from 'react-modal';
+import { IsreadUpdateRoute, getAllNotificationsRoute } from '../utils/APIRoutes';
+import axios from 'axios';
 
 Model.setAppElement('#root');
 
-function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, setnotification }) {
+function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, setNotification }) {
   const navigate = useNavigate();
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [allNotification, setAllNotification] = useState([]);
+  const [countNotification, setCountNotification] = useState(0);
+  const [selectedContacts, setSelectedContacts] = useState({});
 
   function convertImageUrl(User) {
     let avatarImageUrl = default_avatar;
@@ -24,12 +28,9 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, se
       const imageDataArray = User.avatarImage.data.data;
       const base64String = btoa(String.fromCharCode(...imageDataArray));
       avatarImageUrl = `data:${User.avatarImage.contentType};base64,${base64String}`;
-      return avatarImageUrl;
-    } else {
-      return avatarImageUrl;
     }
+    return avatarImageUrl;
   }
-
 
   useEffect(() => {
     if (currentUser) {
@@ -38,24 +39,67 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, se
     }
   }, [currentUser]);
 
-  const CheckNotification =(contact)=>{
-    if(notification){
-     console.log(notification);
-     console.log(contact._id)
-     if((notification.sender===contact._id)){
-       return true
-     }else{
-       return false
-     }
+  useEffect(() => {
+    async function fetchNotifications() {
+      if (currentUser) {
+        try {
+          const response = await axios.post(getAllNotificationsRoute, {
+            reciever: currentUser._id
+          });
+          setAllNotification(response.data);
+        } catch (e) {
+          console.log("Error in fetching Notifications", e);
+        }
+      }
     }
-    return false
- }
+    fetchNotifications();
+  },[currentUser],[]);
+
+  function countNotifications(contact) {
+    if (allNotification) {
+      let count = 0;
+      for (let i = 0; i < allNotification.length; i++) {
+        if (contact._id === allNotification[i].sender) {
+          count += 1;
+        }
+      } if(count>0)  return count
+      return '';
+    }
+    return '';
+  }
+
+  async function updateIsRead(contact) {
+    if (currentUser && currentSelected) {
+      try {
+        await axios.post(IsreadUpdateRoute, {
+          from: contact._id,
+          to: currentUser._id
+        });
+      } catch (e) {
+        console.log("Error in update is read", e);
+      }
+    }
+  }
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
-    if(CheckNotification(contact)){
-      setnotification(null)
+    updateIsRead(contact);
+    if (CheckNotification(contact)) {
+      setNotification(null);
+    }
+    // Mark the contact as selected
+    setSelectedContacts(prevState => ({
+      ...prevState,
+      [contact._id]: true
+    }));
+  };
+
+  const CheckNotification = (contact) => {
+    if (notification && (notification.sender === contact._id)) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -67,8 +111,6 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, se
   const filteredContacts = contacts.filter((contact) =>
     contact.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  
 
   return (
     <div className="Contacts">
@@ -83,14 +125,14 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, se
           },
         }}
       >
-        <ProfileEdit currentUser={currentUser} convertImageUrl = {convertImageUrl} setOpenModal = {setOpenModal} setUpdate = {setUpdate}/>
+        <ProfileEdit currentUser={currentUser} convertImageUrl={convertImageUrl} setOpenModal={setOpenModal} setUpdate={setUpdate} />
       </Model>
       <div id="user-profile">
-        <img src={currentUserImage} height={50} alt="" onclick={()=>setUpdate(true)}/>
+        <img src={currentUserImage} height={50} alt="" onClick={() => setUpdate(true)} />
         <h3>{currentUserName}</h3>
         <div className="icon">
           <FcEditImage id="edit" onClick={() => setOpenModal(true)} />
-          <BiPowerOff id="logout" onClick={() => handleLogout()} />
+          <BiPowerOff id="logout" onClick={handleLogout} />
         </div>
       </div>
       <div className="search-area">
@@ -121,6 +163,7 @@ function Contacts({ contacts, currentUser, setUpdate,changeChat,notification, se
             />
             <h3 className="contact-name">{contact.username}</h3>
             <p>{CheckNotification(contact) && notification.message}</p>
+            <p>{index === currentSelected || selectedContacts[contact._id] ? '' : countNotifications(contact)}</p>
           </div>
         ))}
       </div>
