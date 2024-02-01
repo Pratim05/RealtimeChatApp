@@ -359,7 +359,18 @@ font-size: 20px;
     animation: sendAnimation 0.5s ease-in-out ;
   }
 
-
+.curr_notify{
+    font-size: 12px;
+    color: rgba(18, 187, 18, 0.658);
+  }
+  .Num-notify{
+   height: 23px;
+   width: 23px;
+   text-align: center;
+   background-color:rgb(18, 187, 18);
+   border-radius: 50%;
+   color: #ffffff;
+  }
 
 
 
@@ -407,6 +418,15 @@ font-size: 20px;
         .Chatinput{
             width: 95%;
         }
+
+.Num-notify{
+    height: 15px;
+    width: 15px;
+    text-align: center;
+    background-color:rgb(18, 187, 18);
+    border-radius: 50%;
+    color: #ffffff;
+    }
 
  .emoji svg{
     font-size: 1.3rem;

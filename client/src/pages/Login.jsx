@@ -40,7 +40,7 @@ export const Login = () => {
       const response = await axios.post(forgetpassroute, {
         email
       });
-      console.log(response.data)
+      // console.log(response.data)
       if (response.data.status === false) {
         toast.error(response.data.msg, toastOptions);
       }

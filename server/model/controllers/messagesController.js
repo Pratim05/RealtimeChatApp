@@ -70,6 +70,7 @@ module.exports.addNotification = async (req,res,next) =>{
 module.exports.removeNotification = async (req, res, next) => {
     try {
         const { from, to } = req.body;
+        // console.log(from, to)
 
         // Update messages where sender matches 'from' and receiver matches 'to'
         const data = await MessageModel.updateMany(
@@ -110,7 +111,7 @@ module.exports.getAllNotifications = async (req,res,next) =>{
                 message : notf.message.text,
             }
         })
-//    console.log(projectNotifications)
+    // console.log(projectNotifications)
      res.json(projectNotifications);
     
         

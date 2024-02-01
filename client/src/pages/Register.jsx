@@ -45,7 +45,7 @@ function Register() {
   const sendEmailOtpVerifcation = async ()=>{
     try {
       const {email} = UserData
-      console.log(email)
+      // console.log(email)
       const response = await axios.post(sendotpRoute,{email})
       if(response.data.status===false){
         toast.error(response.data.msg ,toastOptions)

@@ -52,7 +52,7 @@ function ResetPass() {
                 const response = await axios.post(`${resetpassroute}/${id}/${token}`,{
                     newPassword
                   })
-                  console.log(response)
+                  // console.log(response)
                   if(response.data.status===false){
                     toast.error(response.data.msg ,toastOptions)
                   }

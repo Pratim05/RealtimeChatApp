@@ -65,7 +65,7 @@ useEffect(()=>{
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      console.log(handeValidation(), UpdatedUserData);
+      // console.log(handeValidation(), UpdatedUserData);
       if (handeValidation()) {
         const { userId, username, phoneNumber, about, facebookUrl,youtubeUrl,instagramUrl } =
           UpdatedUserData;

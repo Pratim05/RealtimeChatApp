@@ -32,7 +32,7 @@ function ChatRoom() {
     }
   };
   fetchData();
-  console.log(update)
+  // console.log(update)
   setUpdate(false)
 }, [],update,setUpdate);
 

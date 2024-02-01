@@ -328,7 +328,7 @@ module.exports.allusers = async (req, res, next) => {
 module.exports.editprofile = async (req, res, next) => {
   try {
     const { userId, username, phoneNumber, about, facebookUrl , youtubeUrl,instagramUrl } = req.body;
-    console.log(facebookUrl,youtubeUrl,instagramUrl)
+    // console.log(facebookUrl,youtubeUrl,instagramUrl)
     const usernameCheck = await UsersListModel.findOne({
       _id: { $ne: userId }, // Exclude the current user with the specified userId
       username: username,
@@ -361,7 +361,7 @@ module.exports.editprofile = async (req, res, next) => {
       about: about,
      socialLinks: socialLinks,
     };
-    console.log(updateFields)
+    // console.log(updateFields)
    
     
     // Only include avatarImage in the updateFields if req.files is not null
@@ -371,7 +371,7 @@ module.exports.editprofile = async (req, res, next) => {
     
     await UsersListModel.findByIdAndUpdate({ _id: userId }, updateFields)
     
-    const updatedUser = await UsersListModel.findOne({ username }).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);;
+    const updatedUser = await UsersListModel.findOne({ username }).select(["email", "username", "phoneNumber", "about", "socialLinks", "avatarImage", "_id"]);
     
     
     return res.json({

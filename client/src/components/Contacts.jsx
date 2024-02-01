@@ -11,7 +11,7 @@ import axios from 'axios';
 
 Model.setAppElement('#root');
 
-function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, setNotification }) {
+function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, setnotification }) {
   const navigate = useNavigate();
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -19,7 +19,6 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
   const [openModal, setOpenModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [allNotification, setAllNotification] = useState([]);
-  const [countNotification, setCountNotification] = useState(0);
   const [selectedContacts, setSelectedContacts] = useState({});
 
   function convertImageUrl(User) {
@@ -31,6 +30,53 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
     }
     return avatarImageUrl;
   }
+  function countNotifications(contact) {
+    if (allNotification) {
+      let count = 0;
+      for (let i = 0; i < allNotification.length; i++) {
+        if (contact._id === allNotification[i].sender) {
+          count += 1;
+        }
+      } if(count>0)  return count
+      return '';
+    }
+    return '';
+  }
+  async function updateIsRead(contact) {
+    if (currentUser && currentSelected) {
+      try {
+        // console.log(contact.username)
+        const data = await axios.post(IsreadUpdateRoute, {
+          from: contact._id,
+          to: currentUser._id
+        });
+        // console.log(data)
+      } catch (e) {
+        console.log("Error in update is read", e);
+      }
+    }
+  }
+
+  const CheckNotification = (contact) => {
+    if (notification && (notification.sender === contact._id)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+
+
+ 
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     if (currentUser) {
@@ -47,46 +93,21 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
             reciever: currentUser._id
           });
           setAllNotification(response.data);
+          // console.log(response.data);
         } catch (e) {
           console.log("Error in fetching Notifications", e);
         }
       }
     }
     fetchNotifications();
-  },[currentUser],[]);
-
-  function countNotifications(contact) {
-    if (allNotification) {
-      let count = 0;
-      for (let i = 0; i < allNotification.length; i++) {
-        if (contact._id === allNotification[i].sender) {
-          count += 1;
-        }
-      } if(count>0)  return count
-      return '';
-    }
-    return '';
-  }
-
-  async function updateIsRead(contact) {
-    if (currentUser && currentSelected) {
-      try {
-        await axios.post(IsreadUpdateRoute, {
-          from: contact._id,
-          to: currentUser._id
-        });
-      } catch (e) {
-        console.log("Error in update is read", e);
-      }
-    }
-  }
+  },[currentUser],);
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
     updateIsRead(contact);
     if (CheckNotification(contact)) {
-      setNotification(null);
+       setnotification(null);
     }
     // Mark the contact as selected
     setSelectedContacts(prevState => ({
@@ -94,23 +115,9 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
       [contact._id]: true
     }));
   };
+ 
 
-  const CheckNotification = (contact) => {
-    if (notification && (notification.sender === contact._id)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
-  const filteredContacts = contacts.filter((contact) =>
-    contact.username.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ 
 
   return (
     <div className="Contacts">
@@ -161,9 +168,14 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
               alt="profile"
               height={30}
             />
-            <h3 className="contact-name">{contact.username}</h3>
-            <p>{CheckNotification(contact) && notification.message}</p>
-            <p>{index === currentSelected || selectedContacts[contact._id] ? '' : countNotifications(contact)}</p>
+           <div className="name_message">
+           <h3 className="contact-name">{contact.username}</h3>
+            <p className='curr_notify'>{CheckNotification(contact) && notification.message}</p>
+           </div>
+           {index !== currentSelected && !selectedContacts[contact._id] && countNotifications(contact) > 0 && (
+  <p className='Num-notify'>{countNotifications(contact)}</p>
+)}
+
           </div>
         ))}
       </div>
