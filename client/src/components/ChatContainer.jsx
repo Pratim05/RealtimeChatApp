@@ -6,8 +6,13 @@ import axios from "axios";
 import "../pages/CssFiles/ChatMessages.css";
 import { FcInfo } from "react-icons/fc";
 import { v4 as uuidv4 } from "uuid";
+import Model from 'react-modal';
+import ContactInfo from "./ContactInfo";
+Model.setAppElement('#root');
+
 
 function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
+  const [openModal, setOpenModal] = useState(false);
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
@@ -80,17 +85,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     setMessages(msgs);
   };
 
-  // const Savenotification = async(MsgSender,arrivalMessage,currentUser)=>{
-  //   try {
-  //     const response = await axios.post(addNotificationRoute, {
-  //       sender : MsgSender , message: arrivalMessage.message, reciever :currentUser._id,
-  //     });
-  //     console.log(response)
-      
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+ 
 
   
  
@@ -118,6 +113,19 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     <div>
       {currentChat && (
         <div className="ChatContainer">
+          <Model
+        isOpen={openModal}
+        onRequestClose={() => setOpenModal(false)}
+        style={{
+          content: {
+            width: '450px',
+            height: '550px',
+            margin: '0 auto',
+          },
+        }}
+      >
+    <ContactInfo currentChat ={currentChat} convertImageUrl={convertImageUrl} />
+      </Model>
           <div className="chat-header">
             <div className="avatar_name">
              <img src={convertImageUrl(currentChat)} alt="" height={50} />

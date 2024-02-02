@@ -43,18 +43,18 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
     return '';
   }
   async function updateIsRead(contact) {
-    if (currentUser && currentSelected) {
+  
       try {
-        // console.log(contact.username)
+        console.log(contact.username)
         const data = await axios.post(IsreadUpdateRoute, {
           from: contact._id,
           to: currentUser._id
         });
-        // console.log(data)
+        console.log(data)
       } catch (e) {
         console.log("Error in update is read", e);
       }
-    }
+    
   }
 
   const CheckNotification = (contact) => {
@@ -100,12 +100,12 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
       }
     }
     fetchNotifications();
-  },[currentUser],);
+  },[currentUser],[],);
 
   const changeCurrentChat = (index, contact) => {
+    updateIsRead(contact);
     setCurrentSelected(index);
     changeChat(contact);
-    updateIsRead(contact);
     if (CheckNotification(contact)) {
        setnotification(null);
     }
