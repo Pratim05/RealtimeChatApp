@@ -120,3 +120,23 @@ module.exports.getAllNotifications = async (req,res,next) =>{
     }
 
 }
+
+
+module.exports.clearChat = async (req,res,next) =>{
+    try {
+        const {currentChatId,currentUserId} = req.body;
+  console.log(currentChatId,currentUserId);
+        const response = await MessageModel.deleteMany(
+            {
+                users :    {
+                    $all : [ currentChatId , currentUserId]
+                }
+            }
+        )
+        console.log(response)
+        if(response) return res.json({msg:"Chat is Deleted Succesfully",deletedCount:response.deletedCount});
+        
+    } catch (ex) {
+        next(ex)
+    }
+}
