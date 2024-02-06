@@ -17,6 +17,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
   const [MsgSender, setMsgSender] = useState('')
+  const [MsgRefresh, setMsgRefresh] = useState(false)
   
 
   function convertImageUrl(User) {
@@ -64,7 +65,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
       }
     }
     fetchMessages();
-  }, [currentChat]);
+  }, [currentChat],[openModal]);
 
 
 
@@ -124,14 +125,14 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
           },
         }}
       >
-    <ContactInfo currentChat ={currentChat} convertImageUrl={convertImageUrl} />
+    <ContactInfo currentChat ={currentChat} currentUser={currentUser} convertImageUrl={convertImageUrl} setOpenModal={setOpenModal} setMsgRefresh={setMsgRefresh}/>
       </Model>
           <div className="chat-header">
             <div className="avatar_name">
-             <img src={convertImageUrl(currentChat)} alt="" height={50} />
+             <img src={convertImageUrl(currentChat)} alt="photo" height={50} />
             <div className="username">{currentChat.username}</div>
             </div>
-          <div className="icon contact-info"><FcInfo/></div>
+          <div className="icon contact-info" onClick ={() => setOpenModal(true)} ><FcInfo/></div>
           </div>
           <div className="chat-massages">
             {messages.map((message) => (

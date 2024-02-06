@@ -6,39 +6,70 @@ import { RiPhoneFill } from "react-icons/ri"
 import { TfiFacebook } from "react-icons/tfi"
 import { RiInstagramFill } from "react-icons/ri"
 import { SiYoutube } from "react-icons/si"
+import axios from 'axios'
+import { clearchatRoute } from '../utils/APIRoutes'
+import {ToastContainer , toast} from "react-toastify"
 
 
+function ContactInfo({currentChat,currentUser,convertImageUrl,setOpenModal,setMsgRefresh}) {
 
-function ContactInfo({currentChat,convertImageUrl}) {
+  const toastOptions = {
+    position:'bottom-right',
+    autoClose:5000,
+    draggable:true,
+    pauseOnHover:true,
+   
+}
+
+const ClearChat = async(currentChatId,currentUserId) =>{
+ 
+ try {
+  const response = await axios.post(clearchatRoute,{
+    currentChatId,currentUserId
+  })
+  console.log(response)
+  toast.success(`${response.data.deletedCount} Messages is Cleared` ,toastOptions)
+  setMsgRefresh(true)
+ } catch (error) {
+  console.log(error)
+ }
+}
+
+function OpenChat() {
+  setOpenModal(false)
+  setMsgRefresh(false)
+}
+
+
   return (
     <div className='ContactInfo'>
        
        <div className="profile_img">
-        <img src="" alt="Your Profile Photo" />
+       <img src={convertImageUrl(currentChat)} alt="Profile Picture" height={50} />
        </div>
 
-       <h3 className="contact-name">Pratim Bera</h3>
+       <h3 className="contact-name">{currentChat.username}</h3>
     <div  className='contact-email'>
-      <h5>pratimbera@gmail.com</h5>
+      <h5>{currentChat.email}</h5>
       <div className="icon"><MdMarkEmailRead />
 </div>
     </div>
     <div  className='contact-number'>
       <div className="icon"><RiPhoneFill /></div>
-      <h5>7478363309</h5>
+      <h5>{currentChat.phoneNumber}</h5>
     </div>
     <div className="contact-about">
-      <p className="about">Hi, I am using SwiftTalk </p>
+      <p className="about">{currentChat.about}</p>
     </div>
 <div className="social-icons">
-  <div className="Icons"><TfiFacebook /></div>
-  <div className="Icons"><RiInstagramFill /></div>
-  <div className="Icons"><SiYoutube /></div>
+  <div className="Icons facebook"><TfiFacebook /></div>
+  <div className="Icons instagram"><RiInstagramFill /></div>
+  <div className="Icons youtube"><SiYoutube /></div>
 </div>
 
 <div className="buttons">
-  <button className="form-btn clear-btn">Clear Chat</button>
-  <button className="form-btn openChat-btn">Open Chat</button>
+  <button onClick={()=>ClearChat(currentChat._id,currentUser._id)} className="form-btn clear-btn">Clear Chat</button>
+  <button onClick={() => OpenChat()} className="form-btn openChat-btn">Open Chat</button>
   
 </div>
 

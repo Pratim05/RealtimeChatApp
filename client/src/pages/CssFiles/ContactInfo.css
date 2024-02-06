@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Eczar&family=Single+Day&display=swap');
+
+.ContactInfo{
+    background: white;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 400px;
+    color: black;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.profile_img{
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    background-color: rgb(53, 125, 189);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+.profile_img img{
+    height: 130px;
+    width: 130px;
+}
+.ContactInfo .contact-name{
+    font-size: 35px;
+    font-family: 'Eczar', serif;
+}
+.contact-email ,.contact-number{
+    display: flex;
+    color: rgba(41, 39, 39, 0.897);
+    font-size: 20px;
+}
+.contact-email .icon ,.contact-number .icon{
+    display: flex;
+    color: rgb(34, 34, 122);
+}
+
+.contact-about{
+    margin: 5px;
+    height: 70px;
+    width: 350px;
+    /* border: 2px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contact-about .about  {
+    font-family: 'Single Day', cursive;
+    background-color: rgba(174, 125, 219, 0.788);
+    padding: 4px;
+    height: fit-content;
+    width: fit-content;
+    border-radius: 5px;
+}
+
+.social-icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 20px;
+}
+.social-icons .Icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding: 1.5px;
+    cursor: pointer;
+    box-shadow: 0px 5px 14px rgba(41, 39, 39, 0.897);
+}
+.ContactInfo .buttons{
+    padding-top: 15px;
+}
+.ContactInfo .buttons .form-btn{
+   margin: 10px;
+}
+.clear-btn:hover {
+    background-color:rgb(236, 34, 34);
+    color: white;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(236, 34, 34) 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+
+
+
+
