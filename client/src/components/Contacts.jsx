@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import default_avatar from '../assets/default_avatar.png';
 import { FcEditImage } from 'react-icons/fc';
 import { BiSearch } from "react-icons/bi";
@@ -6,8 +6,11 @@ import { BiPowerOff } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import ProfileEdit from '../components/ProfileEdit';
 import Model from 'react-modal';
-import { IsreadUpdateRoute, getAllNotificationsRoute } from '../utils/APIRoutes';
+import { IsreadUpdateRoute, getAllNotificationsRoute, host, } from '../utils/APIRoutes';
 import axios from 'axios';
+import io from 'socket.io-client';
+
+const socket = io(host);
 
 Model.setAppElement('#root');
 
@@ -20,6 +23,8 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
   const [searchTerm, setSearchTerm] = useState('');
   const [allNotification, setAllNotification] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState({});
+
+
 
   function convertImageUrl(User) {
     let avatarImageUrl = default_avatar;
@@ -65,13 +70,28 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
     }
   };
 
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
+  useEffect(() => {
+    // Listen for userStatusChanged event from the server
+    socket.on('userStatusChanged', ({ userId, isOnline ,OnlineUsers}) => {
+      // Update the onlineUsers state based on the received event
+     console.log(OnlineUsers)
+      setOnlineUsers(OnlineUsers);
+    });
+  
+    // Clean up the event listener on component unmount
+    return () => {
+      socket.off('userStatusChanged');
+    };
+  }, []);
 
 
- 
 
   const handleLogout = () => {
     localStorage.clear();
     navigate('/');
+    
   };
 
   const filteredContacts = contacts.filter((contact) =>
@@ -162,14 +182,18 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
               changeCurrentChat(index, contact);
             }}
           >
-            <img
+           <div className="contact-avatar">
+           <img
               className="contact-profile-img"
               src={convertImageUrl(contact)}
               alt="profile"
               height={30}
             />
+         {onlineUsers?.includes(contact._id) &&  <span class="status"></span> }
+           </div>
            <div className="name_message">
            <h3 className="contact-name">{contact.username}</h3>
+           {/* <p> {onlineUsers?.includes(contact._id) ? 'Online' : 'Offline'}</p> */}
             <p className='curr_notify'>{CheckNotification(contact) && notification.message}</p>
            </div>
            {index !== currentSelected && !selectedContacts[contact._id] && countNotifications(contact) > 0 && (

@@ -119,9 +119,11 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
         onRequestClose={() => setOpenModal(false)}
         style={{
           content: {
-            width: '450px',
+            width: '360px',
             height: '550px',
             margin: '0 auto',
+            background:'',
+            border:''
           },
         }}
       >

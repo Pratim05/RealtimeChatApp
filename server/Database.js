@@ -66,6 +66,9 @@ const UserSchema = ({
       contentType:String,
       data: mongoose.Schema.Types.Buffer
     },
+    isOnline :{
+      type:Boolean,
+    }
 })
 
 

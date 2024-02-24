@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Eczar&family=Single+Day&display=swap');
 
 .ContactInfo{
-    background: white;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
-    width: 400px;
+    height: 450px;
+    width: 300px;
     color: black;
+    background-color: white;
     font-family: 'Rajdhani', sans-serif;
+    box-shadow: 0 5px 4px rgba(93, 92, 170, 0.897);
 }
 
 .profile_img{
