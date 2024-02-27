@@ -70,16 +70,22 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
 
 
 
-  const handleSendMsg = async (msg) => {
+  const handleSendMsg = async (msg, file) => {
+    console.log('sending file: ', file)
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
-    });
+      file : file
+    },
+    {headers: {
+      'Content-Type': 'multipart/form-data'
+    }});
     socket.current.emit("send-msg", {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
+      file: file
     });
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });

@@ -86,4 +86,29 @@
   }
   
 
-  
+  .img-view{
+    position:relative;
+  }
+  #uploaded-image{
+    position: absolute;
+    top: -140px;
+    left: -100px;
+    padding: 4px;
+    border: 1px dashed black;
+    display: none;
+  }
+  .hidden-close{
+   /* visibility: hidden; */
+   display: none;
+    color: red;
+    position: absolute;
+    top: -140px;
+    left: -5px;
+    cursor: pointer;
+  }
+  /* #uploaded-image:hover ~ .hidden-close{
+    visibility: visible;
+  }
+  .hidden-close:hover ~ .hidden-close{
+    visibility: visible;
+  } */

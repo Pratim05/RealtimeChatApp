@@ -75,8 +75,13 @@ const UserSchema = ({
 const messageSchema = new mongoose.Schema({
   message:{
     text:{
-      type:String, required:true
+      type:String,
     },
+    file:{
+      filename: String ,
+      contentType:String,
+      data: mongoose.Schema.Types.Buffer
+    }
   },
   users :Array,
   isRead : Boolean,

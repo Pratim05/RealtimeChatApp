@@ -76,7 +76,6 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
     // Listen for userStatusChanged event from the server
     socket.on('userStatusChanged', ({ userId, isOnline ,OnlineUsers}) => {
       // Update the onlineUsers state based on the received event
-     console.log(OnlineUsers)
       setOnlineUsers(OnlineUsers);
     });
   

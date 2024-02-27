@@ -1,21 +1,53 @@
 const { MessageModel, notificationModel } = require("../../Database");
 
-module.exports.addMessage = async (req,res,next) =>{
-    try {
+const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
-        const {from , to, message} = req.body;
-        const data =  await MessageModel.create({
-            message:{text:message},
+module.exports.addMessage = async (req, res, next) => {
+    try {
+        const { from, to, message } = req.body;
+        // const { file } = req.files;
+        console.log(req.files)
+        
+        
+        // Check if the file type is allowed
+        if (req.files !== null && !allowedFileTypes.includes(req.files['file[]'].mimetype)) {
+
+            return res.status(400).json({ msg: 'Unsupported file type.' });
+        } 
+
+        var data ;
+
+       if(req.files !== null){
+       
+         data =  await MessageModel.create({
+            message:{text:message,
+                file:{
+                    filename: req.files['file[]'].name ,
+                    contentType:req.files['file[]'].mimetype,
+                    data: req.files['file[]'].data,
+                  }
+            },
             users: [from, to],
             isRead:false,
             sender : from,
 
         })
+       }else{
+        data =  await MessageModel.create({
+            message:{text:message },
+            users: [from, to],
+            isRead:false,
+            sender : from,
+
+        })
+       }
+        
         if (data) return res.json({msg:"Message added succesfully"});
 
         return res.json({msg:"Failed to add message to the database"})
         
     } catch (ex) {
+        console.log(ex)
         next(ex)
     }
 
@@ -23,7 +55,7 @@ module.exports.addMessage = async (req,res,next) =>{
 module.exports.getAllMessage = async (req,res,next) =>{
     try {
        
-
+    
         const {from , to} = req.body;
         const messages = await MessageModel.find({
             users :    {

@@ -11,7 +11,6 @@ const limiter = rateLimit({
 })
 
 
-
 const userRoutes = require("./routes/userRoutes.js");
 const messageRoutes = require("./routes/messagesRoute.js");
 
@@ -64,7 +63,6 @@ io.on("connection", (socket) => {
       );
       console.log(`User ${userId} is now online.`);
       io.emit('userStatusChanged', {OnlineUsers : Array.from(onlineUsers.keys())});
-      console.log('new user',onlineUsers)
 
     } catch (error) {
       console.error("Error updating user status:", error);
@@ -90,7 +88,6 @@ io.on("connection", (socket) => {
         // Remove user from onlineUsers map
        await onlineUsers.delete(userId);
        io.emit('userStatusChanged', {OnlineUsers : Array.from(onlineUsers.keys())});
-       console.log(onlineUsers)
 
       } catch (error) {
         console.error("Error updating user status:", error);
