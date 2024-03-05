@@ -1,14 +1,12 @@
 const { MessageModel, notificationModel } = require("../../Database");
 
-const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain','application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-        const { from, to, message } = req.body;
-        // const { file } = req.files;
-        console.log(req.files)
-        
-        
+        const { from, to, message, fileType } = req.
+        body;
+       console.log('uploaded file' , req.files)
         // Check if the file type is allowed
         if (req.files !== null && !allowedFileTypes.includes(req.files['file[]'].mimetype)) {
 
@@ -25,7 +23,8 @@ module.exports.addMessage = async (req, res, next) => {
                     filename: req.files['file[]'].name ,
                     contentType:req.files['file[]'].mimetype,
                     data: req.files['file[]'].data,
-                  }
+                  },
+                fileType: fileType,
             },
             users: [from, to],
             isRead:false,
@@ -64,9 +63,12 @@ module.exports.getAllMessage = async (req,res,next) =>{
         }).sort({updatedAt : 1})
 
         const projectMessages = messages.map((msg)=>{
+            
             return{
                 fromSelf : msg.sender.toString() === from,
                 message : msg.message.text,
+                file : msg.message.file,
+                fileType:msg.message.fileType
             }
         })
 

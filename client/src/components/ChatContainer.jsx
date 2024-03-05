@@ -8,6 +8,7 @@ import { FcInfo } from "react-icons/fc";
 import { v4 as uuidv4 } from "uuid";
 import Model from 'react-modal';
 import ContactInfo from "./ContactInfo";
+import { DocxFilesComp, ExcelFilesComp, ImageFilesComp, PdfFilesComp, TextFilesComp } from "./FilesComponent/FilesComp";
 Model.setAppElement('#root');
 
 
@@ -38,12 +39,14 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     }
   }
 
+ 
+
   useEffect(() => {
     // console.log("useeffect", socket.current);
     if (socket.current) {
       // console.log("Socket connection status:", socket.current.connected);
       socket.current.on("msg-recieve", (data) => {    
-        setArrivalMessage({ fromSelf: false, message: data.message });
+        setArrivalMessage({ fromSelf: false, message: data.message , file:data.file });
          setMsgSender(data.from)
       });
       console.log("Event listener setup completed");
@@ -58,6 +61,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
             from: currentUser._id,
             to: currentChat._id,
           });
+          
           setMessages(response.data);
         } catch (e) {
           console.log("Error in fetching Messages", e);
@@ -70,13 +74,14 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
 
 
 
-  const handleSendMsg = async (msg, file) => {
-    console.log('sending file: ', file)
+  const handleSendMsg = async (msg, file, fileType) => {
+   
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
-      file : file
+      file : file,
+      fileType: fileType
     },
     {headers: {
       'Content-Type': 'multipart/form-data'
@@ -85,10 +90,11 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
-      file: file
+      file: file,
+      fileType: fileType
     });
     const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
+    msgs.push({ fromSelf: true, message: msg , file: file, fileType: fileType });
     setMessages(msgs);
   };
 
@@ -137,7 +143,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
       </Model>
           <div className="chat-header">
             <div className="avatar_name">
-             <img src={convertImageUrl(currentChat)} alt="photo" height={50} />
+             <img src={convertImageUrl(currentChat)} alt="" height={50} />
             <div className="username">{currentChat.username}</div>
             </div>
           <div className="icon contact-info" onClick ={() => setOpenModal(true)} ><FcInfo/></div>
@@ -152,8 +158,32 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
                 ref={scrollRef}
               >
                 <div className="content">
-                  <p>{message.message}</p>
-                </div>
+  {
+    // First, check if there is no file or the file object is empty
+    (message.file && Object.keys(message.file).length === 0) || message.file === null ? (
+      <p>{message.message}</p>
+    ) : (
+      // Then, based on the fileType, decide which component to render
+      message.fileType === 'image' ? (
+        <ImageFilesComp file={message.file} />
+      ) : message.fileType === 'pdf' ? (
+        <PdfFilesComp file={message.file} />
+      ) :message.fileType === 'word' ? (
+        <DocxFilesComp file={message.file} />
+      ) :message.fileType === 'excel' ? (
+        <ExcelFilesComp file={message.file} />
+      ):message.fileType === 'text' ? (
+        <TextFilesComp file={message.file} />
+      ):
+      
+      (
+        // If neither, you can render a fallback or nothing
+        <p>Unsupported file type</p>
+      )
+    )
+  }
+</div>
+
               </div>
             ))}
           </div>

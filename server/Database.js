@@ -81,6 +81,9 @@ const messageSchema = new mongoose.Schema({
       filename: String ,
       contentType:String,
       data: mongoose.Schema.Types.Buffer
+    },
+    fileType:{
+      type: String,
     }
   },
   users :Array,

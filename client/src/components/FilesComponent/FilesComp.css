@@ -1,0 +1,33 @@
+.files_conatiner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .files_box{
+    display:flex ;
+    border-radius: 4px 10px 10px 4px;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,255,154,1) 72%, rgba(41,201,70,1) 89%);
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    width: 200px;
+    height: 25px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    color:#fff
+  }
+  .files_box img{
+    width: 35px;
+  }
+
+  .Imgfiles_container{
+    display:flex ;
+    border-radius: 4px 10px 10px 4px;
+  }
+  .Imgfiles_container img{
+   width: 100px;
+   height:100px;
+  }
+  
+  
