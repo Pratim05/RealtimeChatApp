@@ -1,5 +1,10 @@
 import React from 'react'
 import './FilesComp.css'
+import { PiDownloadSimpleDuotone } from "react-icons/pi";
+
+import docIcon from '../../assets/docIcon.png'
+import excelIcon from '../../assets/excelIcon.png'
+import pdfIcon from '../../assets/pdfIcon.png'
 
 function convertFileImageUrl (file) {
   let avatarImageUrl 
@@ -24,16 +29,38 @@ function convertFileImageUrl (file) {
   }
 }
 
+const handleDownload = (file) => {
+    // Convert the ArrayBuffer to a Blob
+    const blob = new Blob([new Uint8Array(file.data.data)], { type: file.contentType });
+    // Create a temporary URL for the Blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    // Set the href attribute to the temporary URL
+    link.href = url;
+    // Set the download attribute to the desired file name
+    link.download = file.filename;
+    // Append the anchor element to the document body
+    document.body.appendChild(link);
+    // Trigger a click event on the anchor element
+    link.click();
+    // Remove the anchor element from the document body
+    document.body.removeChild(link);
+    // Revoke the temporary URL to free up memory
+    window.URL.revokeObjectURL(url);
+  };
+
 export const DocxFilesComp = ({file}) => {
   return (
     <div className="files_container">
     <div className="files_box">
-      <img src="" alt="" />
+      <img src={docIcon} alt="" />
       <div className="file_name">
-      DocxFilesComp
+     {file?.filename}
       </div>
-      <div className="download_icon">
-
+      <div className="download_icon" onClick={()=>handleDownload(file)}>
+      <PiDownloadSimpleDuotone />
       </div>
     </div>
   </div>
@@ -53,12 +80,12 @@ export const PdfFilesComp = ({file}) => {
   return (
     <div className="files_container">
     <div className="files_box">
-      <img src="" alt="" />
+      <img src={pdfIcon} alt="" />
       <div className="file_name">
-      PdfFilesComp
+     {file?.filename}
       </div>
-      <div className="download_icon">
-
+      <div className="download_icon" onClick={()=>handleDownload(file)}>
+      <PiDownloadSimpleDuotone />
       </div>
     </div>
   </div>
@@ -71,25 +98,27 @@ export const TextFilesComp = ({file}) => {
     <div className="files_box">
       <img src="" alt="" />
       <div className="file_name">
-      TextFilesComp
+     {file?.filename}
       </div>
-      <div className="download_icon">
-
+      <div className="download_icon" onClick={()=>handleDownload(file)}>
+      <PiDownloadSimpleDuotone />
       </div>
     </div>
   </div>
   )
 }
+
 export const ExcelFilesComp = ({file}) => {
+  console.log(file)
   return (
     <div className="files_container">
     <div className="files_box">
-      <img src="" alt="" />
+      <img src={excelIcon} alt="" />
       <div className="file_name">
-      ExcelFilesComp
+     {file?.filename}
       </div>
-      <div className="download_icon">
-
+      <div className="download_icon" onClick={()=>handleDownload(file)}>
+      <PiDownloadSimpleDuotone />
       </div>
     </div>
   </div>

@@ -8,17 +8,27 @@
     display:flex ;
     border-radius: 4px 10px 10px 4px;
     background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,255,154,1) 72%, rgba(41,201,70,1) 89%);
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
-    width: 200px;
-    height: 25px;
+    padding: 5px;
+    width: fit-content;
+    height: fit-content;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     color:#fff
   }
   .files_box img{
-    width: 35px;
+    width: 30px;
+  }
+  .files_box .download_icon{
+   color: rgb(255, 255, 255);
+   font-size: 25px;
+   cursor: pointer;
+   border-radius: 10px;
+   text-align: center;
+  }
+  .files_box .download_icon:hover{
+   background-color: white;
+   color: rgb(2,0,36);
   }
 
   .Imgfiles_container{

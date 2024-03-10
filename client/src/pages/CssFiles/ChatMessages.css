@@ -80,25 +80,25 @@
     background-color:transparent
   }
   
-  .chat-massages::-webkit-scrollbar-thumb {
+.chat-massages::-webkit-scrollbar-thumb {
     border-radius: 100px;
     background-image: linear-gradient(180deg, #1b1b30 0%, #708ad4 99%);
     box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
-  }
+}
   
 
-  .img-view{
+.img-view{
     position:relative;
-  }
-  #uploaded-image{
+}
+#uploaded-image{
     position: absolute;
     top: -140px;
     left: -100px;
     padding: 4px;
     border: 1px dashed black;
     display: none;
-  }
-  .hidden-close , .file-close{
+}
+.hidden-close , .file-close{
    /* visibility: hidden; */
    display: none;
     color: red;
@@ -106,9 +106,9 @@
     top: -140px;
     left: -5px;
     cursor: pointer;
-  }
- .file-close{
+}
+.file-close{
   display: block;
   top: 4px;
   left: -28px;
- }
+}

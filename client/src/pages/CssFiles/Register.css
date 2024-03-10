@@ -12,18 +12,20 @@
     
     margin-top: -33px;
     height: 500px;
-    width: 300px;
+    width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    align-items: flex-start;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.671);
+    background: rgb(255, 255, 255);
     padding: 10px;
     padding-top: 50px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     color: rgb(7, 7, 77);
     padding-bottom: 1px;
+    overflow-y: scroll;
 }
 
 .input-boxes{

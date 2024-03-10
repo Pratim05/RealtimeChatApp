@@ -10,11 +10,13 @@ import ChatRoom from "./pages/ChatRoom";
 import ProfileEdit from "./components/ProfileEdit";
 import ResetPass from "./components/ResetPass";
 import ContactInfo from "./components/ContactInfo";
+import CreateOrLogin from "./pages/CreateOrLogin";
 
 function App() {
   return (
    <BrowserRouter>
    <Routes>
+    <Route path="/createorlogin" element = {<CreateOrLogin/>}/>
     <Route path="/register" element = {<Register/>}/>
     <Route path="/contactinfo" element = {<ContactInfo/>}/>
     <Route path="/login" element = {<Login/>}/>
