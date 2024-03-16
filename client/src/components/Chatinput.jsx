@@ -11,7 +11,8 @@ import { AiFillCloseSquare } from "react-icons/ai";
 function Chatinput({handleSendMsg}) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [msg , setMsg] = useState("")
-
+  const [message, setMessage] = useState("")
+  
   const [file , setFile] = useState(undefined)
   const [fileType , setFileType] = useState('')
 
@@ -23,11 +24,24 @@ function Chatinput({handleSendMsg}) {
 const handleEmojipickerHideShow = ()=>{
     setShowEmojiPicker(!showEmojiPicker)
 }
+const handleKeyDown = (event) => {
+  // Check if the backspace key is pressed
+  if (event.keyCode === 8) {
+    // Prevent the default behavior of the backspace key
+   
+    let message = msg;
+    // Remove the last character from the message
+    message = message.slice(0, -1);
+    setMsg(message);
+  }
+};
 const handleEmojiClick = (event , emoji)=>{
  
-  let message = msg
-  message += event.emoji
-  setMsg(message)
+  //  let message = msg
+  // message += event.emoji
+  // console.log(message)
+  // setMsg(message)
+  setMsg(prevMsg => prevMsg + event.emoji);
 
 }
 
@@ -63,8 +77,10 @@ const CancelFileUpload = ()=>{
 
 const sendChat = (event)=>{
  try {
-  console.log('file',fileType,file)
+ 
+  // console.log('file',fileType,file)
   event.preventDefault()
+  setShowEmojiPicker(false)
   if(msg.length >0 && (!file)){
     handleSendMsg(msg,null,fileType)
     setMsg("")
@@ -104,7 +120,7 @@ const sendChat = (event)=>{
         </div>
       </div>
       <form method='POST' className='input-container' encType='multipart/form-data' onSubmit={(e)=>{sendChat(e)}}>
-        <input type="text" placeholder='Enter Your Message Here...' value={msg} onChange={(e)=>{setMsg(e.target.value)}}/>
+        <input type="text" placeholder='Enter Your Message Here...' value={msg} onChange={(e)=>{setMsg(e.target.value)}}   onKeyDown={handleKeyDown}/>
 
     <div class="img-view">
     { fileType === 'image' ? (<img id="uploaded-image" height={110} width={110}/>) : (<div className='preview'><p>{file && file[0]?.name}</p><span className='file-close'><AiFillCloseSquare size={25} onClick={()=>CancelFileUpload()} /></span></div>)  }
@@ -116,14 +132,12 @@ const sendChat = (event)=>{
   </div>
         
 
-        {/* <label for="file-upload" id='AddDoc'><SiAddthis /></label>
-
-        <input type="file" id="file-upload" accept="image/*" onChange={fileUpload} hidden />  */}
+        
 
          
-      <button className='AddDoc' onClick={() => setShowUploadButtons(!showUploadButtons)}>
+      <div className='AddDoc' onClick={() => setShowUploadButtons(!showUploadButtons)}>
         {showUploadButtons ? (<ImCross />) : (<SiAddthis />)}
-      </button>
+      </div>
       {showUploadButtons && (
         <div className='UploadBtns'>
           <div >
