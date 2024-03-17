@@ -11,7 +11,9 @@ import { AiFillCloseSquare } from "react-icons/ai";
 function Chatinput({handleSendMsg}) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const [msg , setMsg] = useState("")
-  const [message, setMessage] = useState("")
+  const [imgSrc ,setImgSrc] = useState("")
+
+
   
   const [file , setFile] = useState(undefined)
   const [fileType , setFileType] = useState('')
@@ -24,17 +26,7 @@ function Chatinput({handleSendMsg}) {
 const handleEmojipickerHideShow = ()=>{
     setShowEmojiPicker(!showEmojiPicker)
 }
-const handleKeyDown = (event) => {
-  // Check if the backspace key is pressed
-  if (event.keyCode === 8) {
-    // Prevent the default behavior of the backspace key
-   
-    let message = msg;
-    // Remove the last character from the message
-    message = message.slice(0, -1);
-    setMsg(message);
-  }
-};
+
 const handleEmojiClick = (event , emoji)=>{
  
   //  let message = msg
@@ -45,30 +37,36 @@ const handleEmojiClick = (event , emoji)=>{
 
 }
 
-const fileUpload = (event,fileType) => {
-  console.log('FileType ', fileType, event.target.files )
-  setShowUploadButtons(false)
-  setFileType(fileType)
-  const files = event.target.files;
-  setFile(files)
-  const filesLength = files.length;
-
-  if (filesLength > 0 && fileType === 'image') {
-    const imageSrc = URL.createObjectURL(files[0]);
-    const imagePreviewElement = document.querySelector("#uploaded-image");
-    imagePreviewElement.src = imageSrc;
-    imagePreviewElement.style.display = "block";
-    document.querySelector(".hidden-close").style.display ='block'
-  }
-  else if(filesLength > 0 && fileType !== 'image'){
-    document.querySelector(".preview").style.display ='block'
+const fileUpload = async(event,fileType) => {
+  try{
+    console.log('FileType ', fileType, event.target.files )
+    setShowUploadButtons(false)
+    setFileType(fileType)
+    const files = event.target.files;
+    setFile(files)
+    const filesLength = files.length;
+  
+    if (filesLength > 0 && fileType === 'image') {
+      console.log('image' , files )
+      const imageSrc = URL.createObjectURL(files[0])
+      const imagePreviewElement = document.querySelector("#uploaded-image")
+      setImgSrc(imageSrc)
+      // imagePreviewElement.src = imageSrc
+      // imagePreviewElement.style.display = "block"
+      document.querySelector(".hidden-close").style.display ='block'
+    }
+    else if(filesLength > 0 && fileType !== 'image'){
+      document.querySelector(".preview").style.display ='block'
+    }
+  }catch(err){
+   console.log(err)
   }
 };
 
 const CancelFileUpload = ()=>{
   setFile(undefined)
   if(fileType === 'image'){
-  document.querySelector("#uploaded-image").style.display ='none'
+  setFileType('')
   document.querySelector(".hidden-close").style.display ='none'
   }else{
     document.querySelector(".preview").style.display ='none'
@@ -90,18 +88,18 @@ const sendChat = (event)=>{
     setFile(undefined)
     setMsg("")
     document.querySelector(".preview").style.display ='none'
-    if(fileType=== 'image'){
-    document.querySelector("#uploaded-image").style.display ='none'
-    document.querySelector(".hidden-close").style.display ='none'
-    }
+    // if(fileType=== 'image'){
+    // document.querySelector("#uploaded-image").style.display ='none'
+    // document.querySelector(".hidden-close").style.display ='none'
+    // }
   }
  else if(file && msg.length === 0){
     handleSendMsg(null,file,fileType)
     setFile(undefined)
     document.querySelector(".preview").style.display ='none'
     if(fileType=== 'image'){
-      document.querySelector("#uploaded-image").style.display ='none'
-      document.querySelector(".hidden-close").style.display ='none'
+      // document.querySelector("#uploaded-image").style.display ='none'
+      // document.querySelector(".hidden-close").style.display ='none'
       }
   }
  } catch (error) {
@@ -120,10 +118,10 @@ const sendChat = (event)=>{
         </div>
       </div>
       <form method='POST' className='input-container' encType='multipart/form-data' onSubmit={(e)=>{sendChat(e)}}>
-        <input type="text" placeholder='Enter Your Message Here...' value={msg} onChange={(e)=>{setMsg(e.target.value)}}   onKeyDown={handleKeyDown}/>
+        <input type="text" placeholder='Enter Your Message Here...' value={msg} onChange={(e)=>{setMsg(e.target.value)}}  />
 
     <div class="img-view">
-    { fileType === 'image' ? (<img id="uploaded-image" height={110} width={110}/>) : (<div className='preview'><p>{file && file[0]?.name}</p><span className='file-close'><AiFillCloseSquare size={25} onClick={()=>CancelFileUpload()} /></span></div>)  }
+    { fileType === 'image' ? (<img id="uploaded-image" src={imgSrc} height={110} width={110}/>) : (<div className='preview'><p>{file && file[0]?.name}</p><span className='file-close'><AiFillCloseSquare size={25} onClick={()=>CancelFileUpload()} /></span></div>)  }
     {/* <img id="uploaded-image" height={110} width={110}/> */
     file && console.log(file[0].name)
     }

@@ -96,7 +96,7 @@
     left: -100px;
     padding: 4px;
     border: 1px dashed black;
-    display: none;
+    
 }
 .hidden-close , .file-close{
    /* visibility: hidden; */

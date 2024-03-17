@@ -7,10 +7,12 @@ import excelIcon from '../../assets/excelIcon.png'
 import pdfIcon from '../../assets/pdfIcon.png'
 
 function convertFileImageUrl (file) {
+ try {
   let avatarImageUrl 
   console.log('in convertion',file)
   if(file && !file.data){
-    return URL.createObjectURL(file[0])
+    const blob = new Blob([file[0]]);
+    return URL.createObjectURL(blob);
   }
   if (file && file.data !== null) {
     try {
@@ -27,6 +29,9 @@ function convertFileImageUrl (file) {
   } else {
     // return avatarImageUrl;
   }
+ } catch (error) {
+  console.log(error)
+ }
 }
 
 const handleDownload = (file) => {
@@ -50,11 +55,39 @@ const handleDownload = (file) => {
     // Revoke the temporary URL to free up memory
     window.URL.revokeObjectURL(url);
   };
+  const handleBufferDownload = (file, fileType) => {
+    const blob = new Blob([file[0]], { type: fileType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+      
+    link.href = url;
+    link.download = file.filename;
+    // Append the anchor element to the document body
+    document.body.appendChild(link);
+    // Trigger a click event on the anchor element
+    link.click();
+    // Remove the anchor element from the document body
+    document.body.removeChild(link);
+    // Revoke the temporary URL to free up memory
+    window.URL.revokeObjectURL(url);
+  };
+  
 
+
+  
 export const DocxFilesComp = ({file}) => {
+ 
   return (
     <div className="files_container">
-    <div className="files_box">
+    {
+        (file && !file.data) ? 
+        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        <div className="file_name">
+       {file?.filename}
+        </div>
+      <div className="download_icon" onClick={() => handleBufferDownload(file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')}>        <PiDownloadSimpleDuotone /></div></div>)
+        :
+        (<div className="files_box">
       <img src={docIcon} alt="" />
       <div className="file_name">
      {file?.filename}
@@ -62,7 +95,8 @@ export const DocxFilesComp = ({file}) => {
       <div className="download_icon" onClick={()=>handleDownload(file)}>
       <PiDownloadSimpleDuotone />
       </div>
-    </div>
+    </div>)
+      }
   </div>
   )
 }
@@ -77,9 +111,20 @@ export const ImageFilesComp = ({file}) => {
 }
 
 export const PdfFilesComp = ({file}) => {
+  console.log(file)
   return (
+    
     <div className="files_container">
-    <div className="files_box">
+      {
+        (file && !file.data) ? 
+        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        <div className="file_name">
+       {file?.filename}
+        </div>
+        <div className="download_icon" onClick={() => handleBufferDownload(file, 'application/pdf')}>
+        <PiDownloadSimpleDuotone /></div></div>)
+        :
+        (<div className="files_box">
       <img src={pdfIcon} alt="" />
       <div className="file_name">
      {file?.filename}
@@ -87,7 +132,17 @@ export const PdfFilesComp = ({file}) => {
       <div className="download_icon" onClick={()=>handleDownload(file)}>
       <PiDownloadSimpleDuotone />
       </div>
-    </div>
+    </div>)
+      }
+    {/* <div className="files_box">
+      <img src={pdfIcon} alt="" />
+      <div className="file_name">
+     {file?.filename}
+      </div>
+      <div className="download_icon" onClick={()=>handleDownload(file)}>
+      <PiDownloadSimpleDuotone />
+      </div>
+    </div> */}
   </div>
   )
 }
@@ -95,15 +150,25 @@ export const PdfFilesComp = ({file}) => {
 export const TextFilesComp = ({file}) => {
   return (
     <div className="files_container">
-    <div className="files_box">
-      <img src="" alt="" />
+    {
+        (file && !file.data) ? 
+        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        <div className="file_name">
+       {file?.filename}
+        </div>
+        <div className="download_icon" onClick={()=>handleBufferDownload(file)}>
+        <PiDownloadSimpleDuotone /></div></div>)
+        :
+        (<div className="files_box">
+      <img src= '' alt="" />
       <div className="file_name">
      {file?.filename}
       </div>
       <div className="download_icon" onClick={()=>handleDownload(file)}>
       <PiDownloadSimpleDuotone />
       </div>
-    </div>
+    </div>)
+      }
   </div>
   )
 }
@@ -112,7 +177,15 @@ export const ExcelFilesComp = ({file}) => {
   console.log(file)
   return (
     <div className="files_container">
-    <div className="files_box">
+    {
+        (file && !file.data) ? 
+        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        <div className="file_name">
+       {file?.filename}
+        </div>
+        <div className="download_icon" onClick={() => handleBufferDownload(file, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')}>        <PiDownloadSimpleDuotone /></div></div>)
+        :
+        (<div className="files_box">
       <img src={excelIcon} alt="" />
       <div className="file_name">
      {file?.filename}
@@ -120,7 +193,8 @@ export const ExcelFilesComp = ({file}) => {
       <div className="download_icon" onClick={()=>handleDownload(file)}>
       <PiDownloadSimpleDuotone />
       </div>
-    </div>
+    </div>)
+      }
   </div>
   )
 }

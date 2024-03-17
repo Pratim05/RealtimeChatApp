@@ -46,7 +46,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
     if (socket.current) {
       // console.log("Socket connection status:", socket.current.connected);
       socket.current.on("msg-recieve", (data) => {    
-        setArrivalMessage({ fromSelf: false, message: data.message , file:data.file });
+        setArrivalMessage({ fromSelf: false, message: data.message , file:data.file,fileType: data.fileType });
          setMsgSender(data.from)
       });
       console.log("Event listener setup completed");
@@ -188,7 +188,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
             ))}
           </div>
           <div className="chat-inputBox">
-            <Chatinput handleSendMsg={handleSendMsg} />
+            <Chatinput handleSendMsg={handleSendMsg}/>
           </div>
         </div>
       )}
