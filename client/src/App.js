@@ -11,6 +11,7 @@ import ProfileEdit from "./components/ProfileEdit";
 import ResetPass from "./components/ResetPass";
 import ContactInfo from "./components/ContactInfo";
 import CreateOrLogin from "./pages/CreateOrLogin";
+import ReactRecorder from "./components/AudioRecorder/ReactRecorder";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
     <Route path="/chatroom" element = {<ChatRoom/>}/>
     <Route path="/editprofile" element = {<ProfileEdit/>}/>
     <Route path="/resetpass/:id/:token" element = {<ResetPass/>}/>
+    <Route path="/audiorecord" element = {<ReactRecorder/>}/>
     <Route path="/" element = {<Home/>}/>
     </Routes>
     <ToastContainer />

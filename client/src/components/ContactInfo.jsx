@@ -27,7 +27,7 @@ const ClearChat = async(currentChatId,currentUserId) =>{
   const response = await axios.post(clearchatRoute,{
     currentChatId,currentUserId
   })
-  console.log(response)
+ 
   toast.success(`${response.data.deletedCount} Messages is Cleared` ,toastOptions)
   setMsgRefresh(true)
  } catch (error) {

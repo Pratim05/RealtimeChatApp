@@ -112,3 +112,18 @@
   top: 4px;
   left: -28px;
 }
+
+.recordView{
+ position: absolute;
+}
+.sendVoice{
+    color: #1b1b30;
+    position: relative;
+    cursor: pointer;
+    right: 10px ;
+    transition: all 0.5s;
+}
+.sendVoice:hover{
+    color: #085f10;
+    transform: scale(1.2);
+}

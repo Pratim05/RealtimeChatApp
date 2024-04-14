@@ -40,4 +40,37 @@
    height:100px;
   }
   
+  /* Only for audio element */
+
+  audio {
+    width: 200px;
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 11px;
+    padding: 10px;
+}
   
+  audio::-webkit-media-controls {
+    background-color: #f2f2f2;
+    color: red;
+  }
+  
+  audio::-webkit-media-controls-play-button {
+    background-color: #e64242;
+    border: none;
+  }
+  
+  
+  audio::-webkit-media-controls-current-time-display,
+  audio::-webkit-media-controls-time-remaining-display {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  audio::-webkit-media-controls-mute-button {
+    display: none;
+  }
+  
+  audio::-webkit-media-controls-toggle-button {
+    background-color: #e62222;
+  }

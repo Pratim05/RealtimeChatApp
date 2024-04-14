@@ -50,12 +50,11 @@ function Contacts({ contacts, currentUser, setUpdate, changeChat, notification, 
   async function updateIsRead(contact) {
   
       try {
-        console.log(contact.username)
+        
         const data = await axios.post(IsreadUpdateRoute, {
           from: contact._id,
           to: currentUser._id
         });
-        console.log(data)
       } catch (e) {
         console.log("Error in update is read", e);
       }

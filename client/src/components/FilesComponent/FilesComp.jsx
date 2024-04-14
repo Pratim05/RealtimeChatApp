@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import './FilesComp.css'
 import { PiDownloadSimpleDuotone } from "react-icons/pi";
 
@@ -9,7 +9,6 @@ import pdfIcon from '../../assets/pdfIcon.png'
 function convertFileImageUrl (file) {
  try {
   let avatarImageUrl 
-  console.log('in convertion',file)
   if(file && !file.data){
     const blob = new Blob([file[0]]);
     return URL.createObjectURL(blob);
@@ -111,7 +110,6 @@ export const ImageFilesComp = ({file}) => {
 }
 
 export const PdfFilesComp = ({file}) => {
-  console.log(file)
   return (
     
     <div className="files_container">
@@ -174,7 +172,6 @@ export const TextFilesComp = ({file}) => {
 }
 
 export const ExcelFilesComp = ({file}) => {
-  console.log(file)
   return (
     <div className="files_container">
     {
@@ -198,6 +195,29 @@ export const ExcelFilesComp = ({file}) => {
   </div>
   )
 }
+export const AudioFilesComp = ({file}) => {
+  const [audioSrc, setAudioSrc] = useState(null);
+
+  useEffect(() => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setAudioSrc(e.target.result);
+    };
+    reader.readAsDataURL(new Blob([new Uint8Array(file.data.data)]));
+  }, [file]);
+
+  return (
+    <div className="files_container">
+      {audioSrc && (
+        <audio controls>
+          { file?.blobURL ? ( <source src={file?.blobURL} type="audio/mpeg" />): (<source src={audioSrc} type="audio/mpeg" />)}      
+        </audio>
+      )}
+     
+    </div>
+  );
+};
+
 export const UnkhownFilesComp = ({file}) => {
   return (
     <div className="files_container">

@@ -1,37 +1,71 @@
 const { MessageModel, notificationModel } = require("../../Database");
 
-const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain','application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+const allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain','application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/octet-stream'];
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-        const { from, to, message, fileType } = req.
-        body;
-       console.log('uploaded file' , req.files)
+        const { from, to, message, fileType } = req.body;
+    
         // Check if the file type is allowed
-        if (req.files !== null && !allowedFileTypes.includes(req.files['file[]'].mimetype)) {
+        var isFileTypeAllowed = true
+        if (req.files !== null){
+            if(fileType==='audio'){
+                isFileTypeAllowed =  allowedFileTypes.includes(req.files['file[data]']?.mimetype) ? true : false 
+            }else if(fileType!=='audio'){
+                isFileTypeAllowed =  allowedFileTypes.includes(req.files['file[]']?.mimetype) ? true : false 
+            }else{
+                return res.status(400).json({ msg: 'Unsupported file type.' });
+            }
+            
+        }
 
-            return res.status(400).json({ msg: 'Unsupported file type.' });
-        } 
+
+        // if (req.files !== null && (!allowedFileTypes.includes(req.files['file[]']?.mimetype)|| !allowedFileTypes.includes(req.files['file[data]']?.mimetype) )) {
+        //    console.log(!allowedFileTypes.includes(req.files['file[]']?.mimetype) )
+        //    console.log(!allowedFileTypes.includes(req.files['file[data]']?.mimetype))
+        //     return res.status(400).json({ msg: 'Unsupported file type.' });
+        // } 
 
         var data ;
 
-       if(req.files !== null){
+       if(req.files !== null && isFileTypeAllowed){
+        
+        if(fileType === 'audio'){
+            data =  await MessageModel.create({
+                message:{text:message,
+                    file:{
+                        filename: req.files['file[data]']?.name ,
+                        contentType:req.files['file[data]']?.mimetype,
+                        data: req.files['file[data]']?.data,
+                      },
+                    fileType: fileType,
+                },
+                users: [from, to],
+                isRead:false,
+                sender : from,
+    
+            })
+            
+        }else{
+            data =  await MessageModel.create({
+                message:{text:message,
+                    file:{
+                        filename: req.files['file[]']?.name ,
+                        contentType:req.files['file[]']?.mimetype,
+                        data: req.files['file[]']?.data,
+                      },
+                    fileType: fileType,
+                },
+                users: [from, to],
+                isRead:false,
+                sender : from,
+    
+            })
+        }
        
-         data =  await MessageModel.create({
-            message:{text:message,
-                file:{
-                    filename: req.files['file[]'].name ,
-                    contentType:req.files['file[]'].mimetype,
-                    data: req.files['file[]'].data,
-                  },
-                fileType: fileType,
-            },
-            users: [from, to],
-            isRead:false,
-            sender : from,
-
-        })
+         
        }else{
+        console.log("message is sended")
         data =  await MessageModel.create({
             message:{text:message },
             users: [from, to],
@@ -76,6 +110,7 @@ module.exports.getAllMessage = async (req,res,next) =>{
     
         
     } catch (ex) {
+        console.log(ex)
         next(ex)
     }
 

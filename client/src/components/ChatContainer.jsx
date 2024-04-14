@@ -8,7 +8,7 @@ import { FcInfo } from "react-icons/fc";
 import { v4 as uuidv4 } from "uuid";
 import Model from 'react-modal';
 import ContactInfo from "./ContactInfo";
-import { DocxFilesComp, ExcelFilesComp, ImageFilesComp, PdfFilesComp, TextFilesComp } from "./FilesComponent/FilesComp";
+import { DocxFilesComp, ExcelFilesComp, ImageFilesComp, PdfFilesComp, TextFilesComp, AudioFilesComp } from "./FilesComponent/FilesComp";
 Model.setAppElement('#root');
 
 
@@ -49,7 +49,7 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
         setArrivalMessage({ fromSelf: false, message: data.message , file:data.file,fileType: data.fileType });
          setMsgSender(data.from)
       });
-      console.log("Event listener setup completed");
+      // console.log("Event listener setup completed");
     }
   },[currentChat]);
 
@@ -159,11 +159,13 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
               >
                 <div className="content">
   {
-    // First, check if there is no file or the file object is empty
+    // First, check if there is no file or the file object is empty 
+    
     (message.file && Object.keys(message.file).length === 0) || message.file === null ? (
       <p>{message.message}</p>
     ) : (
       // Then, based on the fileType, decide which component to render
+     
       message.fileType === 'image' ? (
         <ImageFilesComp file={message.file} />
       ) : message.fileType === 'pdf' ? (
@@ -174,6 +176,8 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
         <ExcelFilesComp file={message.file} />
       ):message.fileType === 'text' ? (
         <TextFilesComp file={message.file} />
+      ):message.fileType === 'audio' ? (
+        <AudioFilesComp file={message.file} />
       ):
       
       (

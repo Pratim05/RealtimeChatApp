@@ -1,0 +1,14 @@
+.sound-wave{
+    display: none;
+}
+.time{
+    font-weight:700;
+    font-size: 14px;
+    padding: 8px;
+    background: rgb(9, 194, 9);
+    border-radius: 6px;
+    box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+.audio-del{
+    color: red;
+}
