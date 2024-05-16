@@ -8,6 +8,8 @@ export const verifyotpRoute = `${host}/api/auth/verifyotp`
 
 export const loginRoute = `${host}/api/auth/login`
 
+export const adminloginRoute = `${host}/api/auth/adminlogin`
+
 export const allUsersRoute = `${host}/api/auth/allusers`
 
 export const forgetpassroute = `${host}/api/auth/forgetpass`

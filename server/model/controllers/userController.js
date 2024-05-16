@@ -1,4 +1,4 @@
-const { UsersListModel, userOtpVerification } = require("../../Database");
+const { UsersListModel, userOtpVerification, AdminsListModel } = require("../../Database");
 
 const bcrypt = require("bcrypt");
 
@@ -126,6 +126,40 @@ module.exports.login = async (req, res, next) => {
       about:user.about,
       socialLinks:user.socialLinks,
       avatarImage:user.avatarImage
+    };
+
+    return res.json({
+      msg: "Login Successfully",
+      status: true,
+      user: userWithoutPassword,
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+// for Admin
+module.exports.adminlogin = async (req, res, next) => {
+  try {
+    const { password, email } = req.body;
+    console.log(password, email)
+    const user = await AdminsListModel.findOne({ email });
+    console.log(user)
+    if (!user) {
+      return res.json({ msg: "Wrong Email", status: false });
+    }
+    const isPasswordValid = (password === user.password)
+    if (!isPasswordValid) {
+      return res.json({ msg: "Incorrect Password", status: false });
+    }
+    // Create a user object without the password field
+    const userWithoutPassword = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      phoneNumber:user.phoneNumber,
+      organizationName : user.organizationName
     };
 
     return res.json({
@@ -385,3 +419,5 @@ module.exports.editprofile = async (req, res, next) => {
     next(err);
   }
 };
+
+// module.exports.getAllUsersData

@@ -80,7 +80,7 @@ export const DocxFilesComp = ({file}) => {
     <div className="files_container">
     {
         (file && !file.data) ? 
-        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        (<div className="files_box"> <img src={docIcon} alt="" />
         <div className="file_name">
        {file?.filename}
         </div>
@@ -176,7 +176,7 @@ export const ExcelFilesComp = ({file}) => {
     <div className="files_container">
     {
         (file && !file.data) ? 
-        (<div className="files_box"> <img src={pdfIcon} alt="" />
+        (<div className="files_box"> <img src={excelIcon} alt="" />
         <div className="file_name">
        {file?.filename}
         </div>
@@ -198,19 +198,26 @@ export const ExcelFilesComp = ({file}) => {
 export const AudioFilesComp = ({file}) => {
   const [audioSrc, setAudioSrc] = useState(null);
 
+  console.log('AudioFilesComponent : ', file.data)
+
   useEffect(() => {
     const reader = new FileReader();
     reader.onload = (e) => {
       setAudioSrc(e.target.result);
     };
-    reader.readAsDataURL(new Blob([new Uint8Array(file.data.data)]));
+    if(file?.blobURL){
+      reader.readAsDataURL(new Blob([new Uint8Array(file?.data)]));
+    }else{
+      reader.readAsDataURL(new Blob([new Uint8Array(file.data.data)]));
+    }
+
   }, [file]);
 
   return (
     <div className="files_container">
       {audioSrc && (
         <audio controls>
-          { file?.blobURL ? ( <source src={file?.blobURL} type="audio/mpeg" />): (<source src={audioSrc} type="audio/mpeg" />)}      
+         <source src={audioSrc} type="audio/mpeg" />     
         </audio>
       )}
      

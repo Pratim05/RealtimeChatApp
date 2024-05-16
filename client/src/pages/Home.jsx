@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "./CssFiles/Home.css"
 import app_logo from "../assets/app_logo.png"
 import chat_gif from "../assets/chat_gif.gif"
@@ -24,7 +24,7 @@ function Home() {
               <a href="#" >Product</a>
               <a href="#" >Services</a>
               <a href="#" >Contact</a>
-              <a href="#" >Log In</a>
+              <Link to={'/adminlogin'}>Login as Admin</Link>
         </nav>
         </div>
       
