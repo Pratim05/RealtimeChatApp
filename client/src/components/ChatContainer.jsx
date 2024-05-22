@@ -40,7 +40,6 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
   }
 
  
-
   useEffect(() => {
     // console.log("useeffect", socket.current);
     if (socket.current) {
@@ -99,14 +98,6 @@ function ChatContainer({ currentChat, currentUser, socket ,setnotification}) {
   };
 
  
-
-  
- 
- 
-
-
-
-
   useEffect(() => {
     if(currentChat && arrivalMessage){
     if(MsgSender===currentChat._id){
