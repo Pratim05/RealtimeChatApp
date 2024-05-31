@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6312b5bc.css",
+    "main.js": "/static/js/main.0911e9bd.js",
+    "static/media/chat_gif.gif": "/static/media/chat_gif.c898e0e7924e13681f33.gif",
+    "static/media/welcome.gif": "/static/media/welcome.f0a869aaaabc4d8578f8.gif",
+    "static/media/app_logo.png": "/static/media/app_logo.d4c7ec1752421ca368f9.png",
+    "static/media/background.jpg": "/static/media/background.51c5d294bcce217bd8af.jpg",
+    "static/media/default_avatar.png": "/static/media/default_avatar.034a7b2bd70eb280e0ba.png",
+    "index.html": "/index.html",
+    "main.6312b5bc.css.map": "/static/css/main.6312b5bc.css.map",
+    "main.0911e9bd.js.map": "/static/js/main.0911e9bd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6312b5bc.css",
+    "static/js/main.0911e9bd.js"
+  ]
+}
